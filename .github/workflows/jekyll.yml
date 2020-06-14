@@ -1,0 +1,24 @@
+name: Jekyll test
+
+on: [push]
+
+jobs:
+  Build_Test:
+    runs-on: ubuntu-20.04
+    name: Build Test
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: vendor/cache
+          key: ${{ runner.os }}-bundle-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-bundle-
+      - uses: actions/setup-ruby@v1
+      - name: Install dependencies
+        run: |
+          bundle config set path 'vendor/cache'
+          bundle config set cache_all true
+          bundle install --jobs 4 --retry 3
+          [ -d "vendor/cache" ] || { bundle package; }
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
