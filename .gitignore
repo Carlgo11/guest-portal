@@ -1,0 +1,6 @@
+img/bg.*
+Gemfile.lock
+composer.lock
+vendor/
+.bundle
+_site

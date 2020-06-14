@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200&display=swap');
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css');
+body {
+    background: url("/img/bg.webp") no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    font-family: 'SF Pro Text', 'Raleway', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'SF Pro Display', 'Raleway', sans-serif;
+    font-weight: 100;
+}
+
+.title {
+    text-align: center;
+}
+
+.main {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 0.7);
+    padding: 0.9375rem;
+    /*border-radius: 5px;*/
+    text-align: center;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.08);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-control,
+.btn {
+    border-radius: 0;
+}
+
+.separator {
+    margin: 25px auto;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.separator::before {
+    margin-right: .25em;
+}
+
+.separator::after {
+    margin-left: .25em;
+}
+textarea:hover, 
+input:hover, 
+textarea:active, 
+input:active, 
+textarea:focus, 
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+    border-color: #ced4da !important;
+}
+
+#error {
+    display: none;
+}
+#form {
+
+}
+#success {
+    display: none;
+}
+#loading {
+    display: none;
+}
+#approval {
+    display: none;
+}
