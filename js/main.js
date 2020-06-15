@@ -1,7 +1,7 @@
 $(document).ready(function () {
     if (getUrlVars()['ssid'] != null) {
         let ssid = decodeURIComponent(getUrlVars()['ssid'].replace(/\+/g, ' '));
-        $('#topic').text(ssid + " WiFi");
+        $('.title').text(ssid + " WiFi");
         document.title = decodeURIComponent(ssid);
     }
 });
@@ -22,6 +22,7 @@ $('form').submit(function (e) {
 
     let data = getUrlVars();
     let form = $(this);
+    data['code'] = form.serializeArray()[0]['value'];
     $.ajax({
         type: 'GET',
         url: form.attr('action'),
@@ -41,7 +42,6 @@ $('form').submit(function (e) {
         },
         error: function (res) {
             // Display #error with #error-msg set
-            console.error(res);
             displayView('#error');
             $('#error-msg').text('Error: ' + res.statusText);
 
@@ -62,4 +62,17 @@ function displayView(view) {
 }
 $('.btn-back').click(function () {
     location.reload();
+});
+
+
+$('#otp').keyup(function () {
+
+    var foo = $(this).val().split("-").join(""); // remove hyphens
+    if (foo.length > 0) {
+        foo = foo.match(new RegExp('.{1,5}', 'g')).join("-");
+    }
+    $(this).val(foo);
+    if ($(this).val().length == 11) {
+        $('form').submit();
+    }
 });
