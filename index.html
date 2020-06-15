@@ -1,59 +1,12 @@
 ---
 layout: default
 ---
+{% include form.html %}
 
-<!-- Form -->
-<div id="form">
-    <form method="POST" action="/success.json">
-        <h1 class="title">Guest Wifi</h1>
-        <div class="input-group">
-            <input class="form-control" type="text" placeholder="Enter your login code" pattern="^\d{5}(?:-)?\d{5}$"
-                autocomplete="off" autofocus="">
+{% include loading.html %}
 
-            <span class="input-group-btn">
-                <button type="submit" class="btn btn-success ">Connect <i class="fas fa-chevron-right"></i></button>
-            </span>
-        </div>
+{% include approval.html %}
 
-        <div class="separator">or</div>
-        <button type="button" class="btn btn-danger col-xl-5" id="manual"><i class="fas fa-comment"></i> Manual
-            approval</button>
-    </form>
-</div>
+{% include error.html %}
 
-<!-- Awaiting approval -->
-<div id="approval">
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-        <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-
-    <h2 style="bottom: 0; width: 100%; text-align: center; position: absolute; margin-bottom: 3vh;">Waiting for
-        approval...</h2>
-</div>
-
-<!-- Loading -->
-<div id="loading">
-    <h1>Communicating with network...</h1>
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-        <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-</div>
-
-<!-- Error -->
-<div id="error">
-    <h1><i class="far fa-frown text-danger" style="font-size: 65px;line-height: 100px;"></i></h1>
-    <h2 style="font-weight: 200;" id="error-msg">Error:</h2>
-    <button class="btn-primary btn btn-lg"
-        style="bottom:0;position:absolute;left:50%;transform: translate(-50%, -50%);margin-bottom: -10px;"
-        onclick="location.reload()"><i class="fas fa-chevron-left"></i> Back</button>
-</div>
-
-<!-- Success -->
-<div id="success">
-    <h1>Welcome! 😄</h1>
-
-</div>
+{% include success.html %}

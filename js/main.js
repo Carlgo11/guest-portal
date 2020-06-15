@@ -1,12 +1,26 @@
 $(document).ready(function () {
-
+    if (getUrlVars()['ssid'] != null) {
+        let ssid = decodeURIComponent(getUrlVars()['ssid'].replace(/\+/g, ' '));
+        $('#topic').text(ssid + " WiFi");
+        document.title = decodeURIComponent(ssid);
+    }
 });
+
+
+function getUrlVars() {
+    const vars = {};
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+        function (m, key, value) {
+            vars[key] = value;
+        });
+    return vars;
+}
 
 $('form').submit(function (e) {
     // Prevent browser from connecting itself to action path
     e.preventDefault();
 
-    let data;
+    let data = getUrlVars();
     let form = $(this);
     $.ajax({
         type: 'GET',
@@ -39,20 +53,13 @@ $('form').submit(function (e) {
 });
 
 $('#manual').click(function (e) {
-    $('#form').toggle();
-    $('#approval').toggle();
+    displayView('#approval');
 });
 
 function displayView(view) {
-    const views = ['#form', '#approval', '#loading', '#error', '#success']
-    if (!views.includes(view)) {
-        return false;
-    }
-    views.forEach(v => {
-        if (v != view) {
-            $(v).hide();
-        } else {
-            $(v).show();
-        }
-    });
+    $('.view').hide();
+    $(view).show();
 }
+$('.btn-back').click(function () {
+    location.reload();
+});

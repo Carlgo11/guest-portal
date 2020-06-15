@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200&display=swap');
 
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css');
+
 body {
-    background: url("/img/bg.webp") no-repeat;
+    background: url("/img/bg.jpg") no-repeat;
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
@@ -24,8 +25,7 @@ h4 {
 .main {
     background-color: rgba(255, 255, 255, 0.9);
     color: rgba(0, 0, 0, 0.7);
-    padding: 0.9375rem;
-    /*border-radius: 5px;*/
+    padding: 15px;
     text-align: center;
     box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.08);
 
@@ -35,9 +35,22 @@ h4 {
     transform: translate(-50%, -50%);
 }
 
+.spinner-grow {
+    width: 4em;
+    height: 4em;
+}
+
 .form-control,
 .btn {
     border-radius: 0;
+}
+
+.btn-back {
+    float: left;
+    font-size: 1.5em;
+    cursor: pointer;
+    font-weight: 300;
+    color: #222222b3;
 }
 
 .separator {
@@ -61,21 +74,21 @@ h4 {
 .separator::after {
     margin-left: .25em;
 }
-textarea:hover, 
-input:hover, 
-textarea:active, 
-input:active, 
-textarea:focus, 
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
 input:focus,
 button:focus,
 button:active,
 button:hover,
 label:focus,
 .btn:active,
-.btn.active
-{
-    outline:0px !important;
-    -webkit-appearance:none;
+.btn.active {
+    outline: 0px !important;
+    -webkit-appearance: none;
     box-shadow: none !important;
     border-color: #ced4da !important;
 }
@@ -83,15 +96,26 @@ label:focus,
 #error {
     display: none;
 }
-#form {
 
-}
 #success {
     display: none;
 }
+
 #loading {
     display: none;
 }
+
 #approval {
     display: none;
+}
+
+#manual {
+    min-width: max-content;
+}
+
+@media screen and (min-width: 541px) {
+    #manual {
+        padding: 6px 35px;
+        width: max-content !important;
+    }
 }

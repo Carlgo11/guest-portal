@@ -1,0 +1,18 @@
+<!-- Form -->
+<div id="form" class="view">
+    <form method="POST" action="/submit.php">
+        <h1 class="title">Guest Wifi</h1>
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Enter your login code" pattern="^\d{5}(?:-)?\d{5}$"
+                autocomplete="off" autofocus="">
+
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-success ">Connect <i class="fas fa-chevron-right"></i></button>
+            </span>
+        </div>
+
+        <div class="separator">or</div>
+        <button type="button" class="btn btn-danger form-control" id="manual"><i class="fas fa-comment"></i> Manual
+            approval</button>
+    </form>
+</div>
