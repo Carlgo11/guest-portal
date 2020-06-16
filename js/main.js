@@ -34,6 +34,9 @@ $('form').submit(function (e) {
         success: function () {
             // Display success window?
             displayView('#success');
+			 setTimeout(function () {
+                window.location.replace(decodeURIComponent(getUrlVars()['url']));
+            }, 2000);
         },
         beforeSend: function () {
             // Display #loading

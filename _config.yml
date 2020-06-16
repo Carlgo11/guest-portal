@@ -1,7 +1,6 @@
 theme: null
 exclude:
-  - submit.php
-  - vendor
+  - vendor/bundle
   - .bundle
   - .gitignore
   - composer.json
