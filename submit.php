@@ -33,12 +33,12 @@ if (isset($code)) {
             $authorized = $unifi_connection->authorize_guest($mac, $voucher['duration'], $max_up, $max_down, $usage_quota, $ap_mac);
             $unifi_connection->revoke_voucher($voucher['_id']);
             header('Status: 202');
-            print(null, JSON_PRETTY_PRINT));
+            print("{}"));
             return;
         }
     }
 }
 
 header('Status: 400');
-print(json_encode('error' => 'Voucher code not found'], JSON_PRETTY_PRINT));
+print(json_encode(['error' => 'Voucher code not found'], JSON_PRETTY_PRINT));
 return;

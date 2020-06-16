@@ -43,7 +43,8 @@ $('form').submit(function (e) {
         error: function (res) {
             // Display #error with #error-msg set
             displayView('#error');
-            $('#error-msg').text('Error: ' + res.statusText);
+			console.error(res);
+            $('#error-msg').text('Error: ' + res.responseJSON['error']);
 
         }
 
