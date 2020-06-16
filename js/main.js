@@ -23,7 +23,7 @@ $('form').submit(function (e) {
     let form = $(this);
     data['code'] = form.serializeArray()[0]['value'];
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: form.attr('action'),
         dataType: 'json',
         data: data,
