@@ -1,20 +1,18 @@
 @font-face {
-    font-family: 'Raleway';
+    font-family: 'Roboto';
     font-weight: 100;
     font-style: normal;
     font-display: swap;
-    src: local('Raleway Thin'), url('/fonts/Raleway-Thin.ttf') format('truetype');
+    src: local('Roboto Thin'), url('/fonts/Roboto-Thin.ttf') format('truetype');
 }
 
 @font-face {
-    font-family: 'Raleway';
-    src: local('Raleway ExtraLight'), url('/fonts/Raleway-ExtraLight.ttf') format('truetype');
-    font-weight: 200;
+    font-family: 'Roboto';
+    src: local('Roboto Light'), url('/fonts/Roboto-Light.ttf') format('truetype');
+    font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
-
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css');
 
 .webp body {
     background: url("/img/bg.webp") no-repeat;

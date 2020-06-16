@@ -6,7 +6,6 @@ $(document).ready(function () {
     }
 });
 
-
 function getUrlVars() {
     const vars = {};
     window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
