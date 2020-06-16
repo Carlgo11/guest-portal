@@ -1,4 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200&display=swap');
+@font-face {
+    font-family: 'Raleway';
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+    src: local('Raleway Thin'), url('/fonts/Raleway-Thin.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: local('Raleway ExtraLight'), url('/fonts/Raleway-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
 
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css');
 
