@@ -206,3 +206,7 @@ label:focus,
     -ms-user-select: none;
     user-select: none;
 }
+
+.request-buttons button {
+    width: 42px;
+}
