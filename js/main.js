@@ -34,7 +34,7 @@ $('form').submit(function (e) {
         success: function () {
             // Display success window?
             displayView('#success');
-			 setTimeout(function () {
+            setTimeout(function () {
                 window.location.replace(decodeURIComponent(getUrlVars()['url']));
             }, 2000);
         },
@@ -45,7 +45,7 @@ $('form').submit(function (e) {
         error: function (res) {
             // Display #error with #error-msg set
             displayView('#error');
-			console.error(res);
+            console.error(res);
             $('#error-msg').text('Error: ' + res.responseJSON['error']);
 
         }

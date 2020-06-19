@@ -1,0 +1,31 @@
+---
+layout: default
+---
+<div class="main col-12 col-md-10 col-xl-5">
+
+    <!-- Requests -->
+    <div class="col-md-6 noselect" style="float:left;text-align: left;">
+        <h1 style="text-align: center;">Requests</h1>
+        <ul class="list-group" id="requests">
+
+
+        </ul>
+    </div>
+
+    <!-- Online users -->
+    <div class="col-md-6 noselect" style="float:right; text-align: left;">
+        <h1 style="text-align: center;">Online</h1>
+        <ul class="list-group" id="online"></ul>
+    </div>
+
+</div>
+
+<div style="display: none;">
+    <li class="list-group-item d-flex justify-content-between align-items-center" id="request">
+        <div class="request-buttons">
+            <button type="button" class="btn btn-success request-approve"><i class="fas fa-check"></i></button>
+            <button type="button" class="btn btn-danger request-deny"><i class="fas fa-times"></i></button>
+        </div>
+    </li>
+    <li class="list-group-item" id="online" style="height:56px"></li>
+</div>

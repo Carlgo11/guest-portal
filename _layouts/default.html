@@ -9,18 +9,18 @@
     <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" sizes="256x256" />
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/main.css" />
-	<link rel="stylesheet" href="/css/all.min.css"/>
+    <link rel="stylesheet" href="/css/all.min.css" />
 </head>
 
 <body>
     <div class="container">
-            {{ content }}
-        </div>
+        {{ content }}
     </div>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery-ui.min.js"></script>
-    <script src="/js/main.js"></script>
     <script src="/js/modenizr-webp.min.js"></script>
+    {% if page.name == 'index.html' %}<script src="/js/main.js"></script>{% endif %}
+    {% if page.name == 'admin.html' %}<script src="/js/admin.js"></script>{% endif %}
 </body>
 
 </html>
