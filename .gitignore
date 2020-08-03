@@ -1,6 +1,6 @@
 img/bg.*
 Gemfile.lock
-composer.lock
+_api/composer.lock
 vendor/
 .bundle
 _site

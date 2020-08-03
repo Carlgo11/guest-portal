@@ -1,0 +1,9 @@
+theme: null
+exclude:
+  - vendor/bundle
+  - vendor/cache
+  - .bundle
+  - .gitignore
+  - composer.json
+  - Gemfile
+  - README.md

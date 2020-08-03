@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 header('Content-Type: application/json');
 
 $unifi_connection = new UniFi_API\Client($_ENV['hotspot_user'], $_ENV['hotspot_password'], $_ENV['unifi_url'], $_ENV['unifi_site'], $_ENV['unifi_version'], FALSE);
