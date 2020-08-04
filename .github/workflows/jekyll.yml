@@ -1,6 +1,12 @@
 name: Jekyll test
 
-on: [push]
+on:
+  push:
+    branches: master
+    paths: ./jekyll
+  pull_request:
+    branches: master
+    paths: ./jekyll
 
 jobs:
   Build_Test:
@@ -15,6 +21,7 @@ jobs:
           restore-keys: ${{ runner.os }}-bundle-
       - uses: actions/setup-ruby@v1
       - name: Install dependencies
+        working-directory: ./jekyll
         run: |
           bundle config set path 'vendor/cache'
           bundle config set cache_all true
@@ -22,3 +29,4 @@ jobs:
           [ -d "vendor/cache" ] || { bundle package; }
       - name: Build Jekyll site
         run: bundle exec jekyll build
+        working-directory: ./jekyll
