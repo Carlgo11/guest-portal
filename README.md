@@ -1,6 +1,9 @@
 # UniFi Guest Portal
+
 [![CC-BY-4.0](https://img.shields.io/github/license/carlgo11/guest-portal?style=for-the-badge)](LICENSE)
-[![Docker](https://img.shields.io/docker/image-size/carlgo11/guest-portal?style=for-the-badge)](https://hub.docker.com/r/carlgo11/guest-portal/)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Carlgo11/guest-portal/Docker%20Image%20CI?style=for-the-badge)](https://github.com/Carlgo11/guest-portal/actions)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/carlgo11/guest-portal?logo=github&style=for-the-badge)](https://github.com/Carlgo11/guest-portal/releases/latest)
+[![Docker](https://img.shields.io/badge/Docker-Download-2496ed?style=for-the-badge&logo=docker&logoColor=fff)](https://hub.docker.com/r/carlgo11/guest-portal/)
 
 ## Usage
 
