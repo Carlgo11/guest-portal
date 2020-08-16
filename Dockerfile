@@ -1,13 +1,6 @@
 FROM alpine AS jekyll
 
 ###
-# Environment variables
-###
-
-ENV UNIFI_SITE=default
-ENV UNIFI_VERSION=5.13.32
-
-###
 # Jekyll
 ###
 
@@ -75,9 +68,19 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 # Bug fixes
 RUN mkdir /run/nginx
 RUN sed -i 's/cgi.fix_pathinfo= 0/cgi.fix_pathinfo=1/g' /etc/php7/php.ini
-ONBUILD RUN chown www:www /opt/www/ -R
+
+###
+# Default Environment variables
+###
+
+ENV UNIFI_SITE=default
+ENV UNIFI_VERSION=5.13.32
+
+###
+# Execution
+###
 
 COPY --chown=1000 --from=jekyll /opt/www/ /opt/www/
-
+ONBUILD RUN chown www:www /opt/www/ -R
 EXPOSE 80
 CMD php-fpm7 && nginx; tail -F /var/log/nginx/error.log
