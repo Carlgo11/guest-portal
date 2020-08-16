@@ -1,4 +1,11 @@
-FROM alpine
+FROM alpine AS jekyll
+
+###
+# Environment variables
+###
+
+ENV UNIFI_SITE=default
+ENV UNIFI_VERSION=5.13.32
 
 ###
 # Jekyll
@@ -7,8 +14,10 @@ FROM alpine
 # Install Jekyll dependencies
 RUN apk add --no-cache build-base libxml2-dev libxslt-dev ruby-full ruby-dev gcc linux-headers
 
-# Copy Jekyll files
+# Create www user
 RUN adduser -D -u 1000 -h /tmp/www www
+
+# Copy Jekyll files
 COPY --chown=www:www jekyll /tmp/jekyll
 WORKDIR /tmp/jekyll
 
@@ -28,12 +37,17 @@ RUN mv _site /opt/www/
 # Remove Jekyll dependencies
 RUN apk del build-base libxml2-dev libxslt-dev ruby-full ruby-dev gcc linux-headers
 
+FROM alpine
+
 ###
 # PHP
 ###
 
 # Install PHP dependencies
 RUN apk add --no-cache php-fpm php-curl php-json php-session composer
+
+# Create www user
+RUN adduser -D -u 1000 -h /tmp/www www
 
 # Set up PHP-FPM
 COPY php-install.sh /
@@ -62,6 +76,8 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 RUN mkdir /run/nginx
 RUN sed -i 's/cgi.fix_pathinfo= 0/cgi.fix_pathinfo=1/g' /etc/php7/php.ini
 ONBUILD RUN chown www:www /opt/www/ -R
+
+COPY --chown=1000 --from=jekyll /opt/www/ /opt/www/
 
 EXPOSE 80
 CMD php-fpm7 && nginx; tail -F /var/log/nginx/error.log
