@@ -40,9 +40,12 @@ foreach ($vouchers as $voucher) {
         if (isset($voucher['qos_usage_quota'])) $usage_quota = $voucher['qos_usage_quota'];
 
         $authorized = $unifi_connection->authorize_guest($mac, $voucher['duration'], $max_up, $max_down, $usage_quota, $ap_mac);
-        $unifi_connection->revoke_voucher($voucher['_id']);
-        header('Status: 202');
-        print(json_encode(['success' => TRUE], JSON_PRETTY_PRINT));
+        if ($authorized) {
+            header('Status: 202');
+            $unifi_connection->revoke_voucher($voucher['_id']);
+        }
+        else header('Status: 500');
+        print(json_encode(['success' => $authorized]));
         return;
     }
 }
