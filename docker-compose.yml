@@ -1,0 +1,32 @@
+version: "3"
+services:
+  web:
+    build: .
+    container_name: web
+    environment:
+      MYSQL_HOST: db
+      MYSQL_USER: guest-portal
+      MYSQL_PASSWORD: guest-portal
+      MYSQL_DATABASE: guest-portal
+      MYSQL_PORT: 3306
+    ports:
+      - "8080:80"
+    volumes:
+    - ./:/app
+  db:
+    image: mariadb
+    container_name: db
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: guest-portal
+      MYSQL_PASSWORD: guest-portal
+      MYSQL_DATABASE: guest-portal
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin
+    ports:
+      - 81:80
+volumes:
+  mysql:

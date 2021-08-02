@@ -1,0 +1,61 @@
+<div class="main col-12 col-md-10 col-xl-4">
+
+  <!-- Form -->
+  <div id="form" class="view">
+    <form method="POST" action="/api/submit.php">
+      <h1 class="title noselect">Guest Wifi</h1>
+      <div class="input-group">
+        <input class="form-control" type="text" placeholder="Enter your login code" pattern="^\d{5}(?:-)?\d{5}$"
+               autocomplete="one-time-code" autofocus="" autocapitalize="off" spellcheck="false"
+               inputmode="numeric"
+               required="" id="otp" maxlength="11" name="code">
+
+        <span class="input-group-btn">
+                <button type="submit" class="btn btn-success ">Connect <i class="fas fa-chevron-right"></i></button>
+            </span>
+      </div>
+
+      <div class="separator noselect">or</div>
+      <button type="button" class="btn btn-danger form-control" id="manual"><i class="fas fa-comment"></i> Manual
+        approval
+      </button>
+    </form>
+  </div>
+
+  <!-- Loading -->
+  <div id="loading" class="view">
+    <h1>Communicating with network...</h1>
+    <div>
+      <div class="spinner-grow text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Awaiting approval -->
+  <div id="approval" class="view">
+    <div class="spinner">
+      <div class="spinner-grow spinner-grow-lg text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div class="btn-back noselect"><i class="fas fa-chevron-left "></i> Back</div>
+    <h2 class="noselect">Waiting for
+      approval...</h2>
+  </div>
+
+  <!-- Error -->
+  <div id="error" class="view">
+    <div class="btn-back noselect"><i class="fas fa-chevron-left "></i> Back</div>
+    <div id="error-container">
+      <h1><i class="far fa-frown text-danger noselect"></i></h1>
+      <h2 id="error-msg">Error:</h2>
+    </div>
+  </div>
+
+  <!-- Success -->
+  <div id="success" class="view">
+    <h1>Welcome! 😄</h1>
+  </div>
+
+</div>

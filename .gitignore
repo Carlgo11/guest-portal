@@ -1,7 +1,4 @@
-img/bg.*
-Gemfile.lock
-_api/composer.lock
-vendor/
-.bundle
-_site
-.idea
+.*
+vendor
+*.lock
+public/img/bg.*
