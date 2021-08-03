@@ -1,5 +1,0 @@
-{
-    "require": {
-        "art-of-wifi/unifi-api-client": "^1.1"
-    }
-}
