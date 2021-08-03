@@ -9,6 +9,7 @@ services:
       MYSQL_PASSWORD: guest-portal
       MYSQL_DATABASE: guest-portal
       MYSQL_PORT: 3306
+      WEB_DOCUMENT_ROOT: /app/public
     ports:
       - "8080:80"
     volumes:
