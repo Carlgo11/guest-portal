@@ -7,7 +7,7 @@ use Exception;
 
 class Voucher
 {
-    private int $uuid;
+    private int $id;
     private int $uses;
     private DateTime|null $expiry;
     private int|null $duration;
@@ -16,12 +16,12 @@ class Voucher
     /**
      * @throws Exception if provided input is in an unexpected/invalid format.
      */
-    public function __construct(int $uuid = NULL, int $uses = 1, DateTime $expiry = NULL, int $duration = NULL, int $speed_limit = NULL)
+    public function __construct(?int $uuid, int $duration, int $uses = 1, DateTime $expiry = NULL, int $speed_limit = NULL)
     {
         // Validate UUID
-        if ($uuid === NULL) $this->uuid = $this->generateUUID();
+        if ($uuid === NULL) $this->id = $this->generateUUID();
         else {
-            if (strlen($uuid) === 10) $this->uuid = $uuid;
+            if (strlen($uuid) === 10) $this->id = $uuid;
             else throw new Exception("UUID input invalid");
         }
 
@@ -54,7 +54,7 @@ class Voucher
     {
         if (isset($this->{$name}))
             return $this->{$name};
-        else throw new Exception('No such variable found');
+        return null;
     }
 
     /**
@@ -68,6 +68,6 @@ class Voucher
 
     public function __toString()
     {
-        return (string)$this->uuid;
+        return (string)$this->id;
     }
 }

@@ -17,9 +17,20 @@ class UniFi
         return $this->unifi_connection->login();
     }
 
-    public function authorize_guest(string $MACAddress)
+    public function authorizeGuest(string $MACAddress, Voucher $voucher)
     {
+        $this->unifi_connection->authorize_guest($MACAddress, $voucher->duration, $voucher->speed_limit, $voucher->speed_limit);
 //        $this->unifi_connection->authorize_guest();
+    }
+
+    public function listClients(): array
+    {
+        $clients = [];
+        foreach ($this->unifi_connection->list_clients() as $client) {
+            $client = get_object_vars($client);
+            if ($client['is_guest']) $clients[] = $client;
+        }
+        return $clients;
     }
 
 }
