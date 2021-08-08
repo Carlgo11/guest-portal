@@ -26,25 +26,20 @@ class Voucher
         }
 
         // Validate uses
-        if ($uses >= 0 && $uses < 255)
-            $this->uses = $uses;
+        if ($uses >= 0 && $uses < 255) $this->uses = $uses;
         else throw new Exception("Uses input invalid");
 
         // Validate (voucher) expiry date
         if ($expiry !== NULL) {
             if ($expiry > new DateTime()) $this->expiry = $expiry;
             else throw new Exception("Expiry date is in the past");
-        } else {
-            $this->expiry = new DateTime('+1 day');
-        }
+        } else $this->expiry = new DateTime('+1 day');
 
         // Validate (session) duration
         if ($duration === NULL || $duration > 0) $this->duration = $duration;
 
         // Validate (transfer) speed limit
-        if ($speed_limit === NULL || $speed_limit > 0) {
-            $this->speed_limit = $speed_limit;
-        }
+        if ($speed_limit === NULL || $speed_limit > 0) $this->speed_limit = $speed_limit;
     }
 
     /**
@@ -52,8 +47,7 @@ class Voucher
      */
     public function __get(string $name)
     {
-        if (isset($this->{$name}))
-            return $this->{$name};
+        if (isset($this->{$name})) return $this->{$name};
         return null;
     }
 
@@ -63,7 +57,6 @@ class Voucher
     private function generateUUID(): int
     {
         return (int)str_pad(random_int(0, 99999_99999), 10, '0');
-
     }
 
     public function __toString()

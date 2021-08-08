@@ -27,20 +27,33 @@ class Database
         $this->mysql->close();
     }
 
-    public function validateVoucher(Voucher $voucher)
+    public function fetchVoucher(int $code): ?Voucher
     {
-
+        $query = $this->mysql->prepare('SELECT `duration`, `uses`, `expiry`, `speed_limit`  FROM `vouchers` WHERE `id` = ?');
+        $query->bind_param('s', $code);
+        $query->execute();
+        $fetch = $query->get_result();
+        $result = $fetch->fetch_assoc();
+        var_dump($result);
+        if ($result == NULL || sizeof($result) !== 4) throw new Exception('Code not found');
+        try {
+            require_once __DIR__ . '/Voucher.php';
+            return new Voucher($code, $result['duration'], $result['uses'], new \DateTime($result['expiry']), $result['speed_limit']);
+        } catch (Exception $e) {
+            error_log($e);
+            return NULL;
+        }
     }
 
     public function uploadVoucher(Voucher $voucher): bool
     {
         $id = $voucher->id;
         $uses = $voucher->uses;
-        $exiry = $voucher->expiry;
+        $expiry = $voucher->expiry;
         $duration = $voucher->duration;
         $speed_limit = $voucher->speed_limit;
         $query = $this->mysql->prepare('INSERT INTO `vouchers` (`id`, `uses`, `expiry`, `duration`, `speed_limit`) VALUES (?, ?, ?, ?, ?)');
-        $query->bind_param('siiii', $id, $uses, $exiry, $duration, $speed_limit);
+        $query->bind_param('siiii', $id, $uses, $expiry, $duration, $speed_limit);
         $result = $query->execute();
         $query->close();
         return $result;
