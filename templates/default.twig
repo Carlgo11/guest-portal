@@ -14,6 +14,11 @@
 </head>
 
 <body>
+<picture>
+    <source srcset="/img/bg-lg.avif 1920w, /img/bg.avif 4096w" type="image/avif">
+    <source srcset="/img/bg-lg.webp 1920w, /img/bg.webp 4096w" type="image/webp">
+    <img srcset="/img/bg-lg.jpg 1920w, /img/bg.jpg 4096w"  src="/img/bg.jpg" draggable="false" class="background">
+</picture>
 <div class="container">
     {% block content%}{% endblock %}
 </div>

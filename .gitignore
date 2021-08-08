@@ -2,3 +2,4 @@
 vendor
 *.lock
 public/img/bg.*
+public/img/bg-*.*

@@ -14,22 +14,15 @@
     font-display: swap;
 }
 
-.webp body {
-    background: url("/img/bg.webp") no-repeat;
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-
-}
-
-.no-webp body {
-    background: url("/img/bg.jpg") no-repeat;
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
+.background {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 body {
+    background: #a18b2f;
     font-family: 'SF Pro Text', -apple-system, system-ui, 'Raleway', sans-serif;
 }
 
