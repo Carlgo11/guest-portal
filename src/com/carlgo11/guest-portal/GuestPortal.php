@@ -4,6 +4,9 @@
 namespace com\carlgo11\guestportal;
 
 
+use DateTime;
+use Exception;
+
 class GuestPortal
 {
     public function __construct()
@@ -16,7 +19,7 @@ class GuestPortal
         require_once __DIR__ . '/Database.php';
         $code = (int)filter_var(preg_replace('/\D/', '', $code), FILTER_SANITIZE_NUMBER_INT);
         $db = new Database();
-        if (strlen($code) !== 10) throw new \Exception('Invalid code format');
+        if (strlen($code) !== 10) throw new Exception('Invalid code format');
         var_dump($code);
         return $db->fetchVoucher($code);
     }
@@ -31,6 +34,20 @@ class GuestPortal
                 if ($uses = $voucher->uses <= 1) $db->removeVoucher($voucher);
                 else $db->updateUses($voucher, $uses - 1);
             }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function createVoucher(int $uses, DateTime $expiry, int $duration): ?string
+    {
+        require_once __DIR__ . '/Database.php';
+        require_once __DIR__ . '/Voucher.php';
+        $voucher = new Voucher(null, $duration, $uses, $expiry);
+        $db = new Database();
+        if ($db->uploadVoucher($voucher))
+            return $voucher->id;
+        return null;
     }
 
 }

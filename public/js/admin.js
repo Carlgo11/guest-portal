@@ -1,36 +1,48 @@
-$(document).ready(function () {
-    $.ajax({
-        type: 'GET',
-        url: '/_api/guests.php',
-        success: function (res) {
-            //console.info(res);
-            res.forEach(client => {
-                if (client['authorized']) {
-                    addOnline(client);
+$('form').submit(function (e) {
+    // Prevent browser from connecting itself to action path
+    e.preventDefault();
 
-                } else {
-                    addRequest(client)
+    const data = {
+        uses: $('#uses').val(),
+        expiry: $('#expiry').val(),
+        duration: $('#duration').val()
+    };
+
+    $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        timeout: 5000,
+        success: function (data) {
+            $('.view').toggle();
+            $('#v-id').text(data['voucher'].replace(/(.{5})/g,"$1-").slice(0,-1))
+            if ($('#duration').val()) {
+                let hours = 'hrs'
+                if($('#duration').val() <= 1){
+                    hours = 'hr'
                 }
-            });
+                $('#v-duration').show().append($('#duration').val() + hours)
+            }
+            if ($('#speed').val()) {
+                $('#v-speed').show().append($('#speed').val() + 'MiB/s')
+            }
+            if ($('#expiry').val()) {
+                $('#v-expire').show().append($('#expiry').val())
+            }
         },
         error: function (res) {
             console.error(res);
         }
     });
 });
-
-function addRequest(client) {
-    let req = $('#request').clone();
-    req.prop('id', client['mac']);
-    req.prepend(client['hostname']);
-    req.show();
-    req.appendTo('#requests');
-}
-
-function addOnline(client) {
-    let online = $('li#online').clone();
-    online.prop('id', client['mac']);
-    online.prepend(client['hostname']);
-    online.show();
-    online.appendTo('#online');
-}
+$('#v-id').click(function (e){
+    e.preventDefault();
+    navigator.share({
+        title: 'Voucher',
+        text: $(this).text()
+    }).then(r => console.log(r)).catch(err => {
+        console.log(`Couldn't share because of`, err.message);
+    });
+})

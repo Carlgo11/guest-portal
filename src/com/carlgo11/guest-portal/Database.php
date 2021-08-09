@@ -4,6 +4,7 @@
 namespace com\carlgo11\guestportal;
 
 
+use DateTime;
 use Exception;
 use mysqli;
 
@@ -34,7 +35,6 @@ class Database
         $query->execute();
         $fetch = $query->get_result();
         $result = $fetch->fetch_assoc();
-        var_dump($result);
         if ($result == NULL || sizeof($result) !== 4) throw new Exception('Code not found');
         try {
             require_once __DIR__ . '/Voucher.php';
@@ -45,12 +45,32 @@ class Database
         }
     }
 
+    public function listVouchers(int $code): array
+    {
+        $query = $this->mysql->prepare('SELECT `duration`, `uses`, `expiry`, `speed_limit`  FROM `vouchers`');
+        $query->execute();
+        $fetch = $query->get_result();
+        $vouchers = [];
+        require_once __DIR__ . '/Voucher.php';
+        foreach ($fetch->fetch_assoc() as $result) {
+            try {
+                $vouchers[] = new Voucher($code, $result['duration'], $result['uses'], new \DateTime($result['expiry']), $result['speed_limit']);
+            } catch (Exception $e) {
+                error_log($e);
+            }
+        }
+        return $vouchers;
+    }
+
+
     public function uploadVoucher(Voucher $voucher): bool
     {
-        $id = $voucher->id;
-        $uses = $voucher->uses;
+        $id = (int)$voucher->id;
+        $uses = (int)$voucher->uses;
+        /** @var DateTime $expiry */
         $expiry = $voucher->expiry;
-        $duration = $voucher->duration;
+        $expiry = $expiry->getTimestamp();
+        $duration = (int)$voucher->duration;
         $speed_limit = $voucher->speed_limit;
         $query = $this->mysql->prepare('INSERT INTO `vouchers` (`id`, `uses`, `expiry`, `duration`, `speed_limit`) VALUES (?, ?, ?, ?, ?)');
         $query->bind_param('siiii', $id, $uses, $expiry, $duration, $speed_limit);

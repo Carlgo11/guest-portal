@@ -6,19 +6,30 @@ use Twig\Loader\FilesystemLoader;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-if (isset($_POST['uses'])) {
-    $uses = filter_input(INPUT_POST, 'uses', FILTER_SANITIZE_NUMBER_INT);
-    $expiry = filter_input(INPUT_POST, 'expiry');
-    $duration = filter_input(INPUT_POST, 'duration', FILTER_SANITIZE_NUMBER_INT);
-    require_once __DIR__ . '/../src/com/carlgo11/guest-portal/GuestPortal.php';
-    $gp = new GuestPortal();
-} else {
-    $loader = new FilesystemLoader(__DIR__ . '/../templates');
-    $twig = new Environment($loader, [
-        'cache' => './.compilation_cache',
-        'debug' => TRUE,
-    ]);
-
-    $template = $twig->load('admin.twig');
-    echo $template->render();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $uses = filter_var($data['uses'], FILTER_SANITIZE_NUMBER_INT);
+        $expiry = new DateTime(filter_var($data['expiry']));
+        $duration = filter_var($data['duration'], FILTER_SANITIZE_NUMBER_INT);
+        require_once __DIR__ . '/../src/com/carlgo11/guest-portal/GuestPortal.php';
+        $gp = new GuestPortal();
+        if ($voucher = $gp->createVoucher($uses, $expiry, $duration)) {
+            http_response_code(200);
+            die(json_encode(['voucher' => $voucher]));
+        } else throw new Exception("Unable to create voucher");
+    } catch (Exception $e) {
+        $error = ['error' => $e->getMessage()];
+        http_response_code(500);
+        die(json_encode($error));
+    }
 }
+
+$loader = new FilesystemLoader(__DIR__ . '/../templates');
+$twig = new Environment($loader, [
+    'cache' => './.compilation_cache',
+    'debug' => TRUE,
+]);
+$vars = ['vouchers' => $gp->listVouchers];
+$template = $twig->load('admin.twig');
+echo $template->render();

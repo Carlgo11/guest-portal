@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `vouchers`
 (
     `id`          char(10)             NOT NULL COMMENT 'Voucher ID',
     `uses`        tinyint(1) UNSIGNED       DEFAULT 1 COMMENT 'Voucher uses left',
-    `expiry`      timestamp            NULL DEFAULT NULL COMMENT 'Voucher expiry date',
+    `expiry`      int(11)            NULL DEFAULT NULL COMMENT 'Voucher expiry date',
     `duration`    smallint(5) UNSIGNED NOT NULL COMMENT 'Session duration (min)',
     `speed_limit` int(1)                    DEFAULT NULL COMMENT 'Transfer speed limit (MiB/s)',
     PRIMARY KEY (`id`)
