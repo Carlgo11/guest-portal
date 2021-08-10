@@ -22,6 +22,12 @@ class UniFi
         return $this->unifi_connection->authorize_guest($MACAddress, $voucher->duration, $voucher->speed_limit, $voucher->speed_limit, $ap);
     }
 
+    public function isOnline($mac): bool
+    {
+        $resp = $this->unifi_connection->list_clients($mac);
+        return ($resp !== FALSE && sizeof($resp) > 0);
+    }
+
     public function listClients(): array
     {
         $clients = [];
@@ -29,6 +35,7 @@ class UniFi
             $client = get_object_vars($client);
             if ($client['is_guest']) $clients[] = $client;
         }
+        var_dump($clients);
         return $clients;
     }
 

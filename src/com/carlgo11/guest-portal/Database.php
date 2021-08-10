@@ -38,35 +38,19 @@ class Database
         if ($result == NULL || sizeof($result) !== 4) throw new Exception('Code not found');
         try {
             require_once __DIR__ . '/Voucher.php';
-            return new Voucher($code, $result['duration'], $result['uses'], new \DateTime($result['expiry']), $result['speed_limit']);
+            $date = new DateTime();
+            $date->setTimestamp($result['expiry']);
+            return new Voucher($code, $result['duration'], $result['uses'], $date, $result['speed_limit']);
         } catch (Exception $e) {
             error_log($e);
             return NULL;
         }
     }
 
-    public function listVouchers(int $code): array
-    {
-        $query = $this->mysql->prepare('SELECT `duration`, `uses`, `expiry`, `speed_limit`  FROM `vouchers`');
-        $query->execute();
-        $fetch = $query->get_result();
-        $vouchers = [];
-        require_once __DIR__ . '/Voucher.php';
-        foreach ($fetch->fetch_assoc() as $result) {
-            try {
-                $vouchers[] = new Voucher($code, $result['duration'], $result['uses'], new \DateTime($result['expiry']), $result['speed_limit']);
-            } catch (Exception $e) {
-                error_log($e);
-            }
-        }
-        return $vouchers;
-    }
-
-
     public function uploadVoucher(Voucher $voucher): bool
     {
-        $id = (int)$voucher->id;
-        $uses = (int)$voucher->uses;
+        $id = $voucher->id;
+        $uses = $voucher->uses;
         /** @var DateTime $expiry */
         $expiry = $voucher->expiry;
         $expiry = $expiry->getTimestamp();
@@ -79,9 +63,14 @@ class Database
         return $result;
     }
 
-    public function removeVoucher(Voucher $voucher)
+    public function removeVoucher(Voucher $voucher): bool
     {
-
+        $code = $voucher->id;
+        $query = $this->mysql->prepare('DELETE FROM `vouchers` WHERE `id` = ?');
+        $query->bind_param('s', $code);
+        $result = $query->execute();
+        $query->close();
+        return $result;
     }
 
     public function updateUses(Voucher $voucher, $newUses)

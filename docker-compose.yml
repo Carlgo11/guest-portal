@@ -9,11 +9,17 @@ services:
       MYSQL_PASSWORD: guest-portal
       MYSQL_DATABASE: guest-portal
       MYSQL_PORT: 3306
+      UNIFI_USER: guest-portal
+      UNIFI_PASSWORD: ***REMOVED***
+      UNIFI_URL: https://***REMOVED***
+      UNIFI_SITE: default
+      UNIFI_VERSION: 6.0.43
+      UNIFI_VERIFY_CERT: 0
       WEB_DOCUMENT_ROOT: /app/public
     ports:
       - "8080:80"
     volumes:
-    - ./:/app
+      - ./:/app
   db:
     image: mariadb
     container_name: db

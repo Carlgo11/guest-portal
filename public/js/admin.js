@@ -17,11 +17,12 @@ $('form').submit(function (e) {
         timeout: 5000,
         success: function (data) {
             $('.view').toggle();
-            $('#v-id').text(data['voucher'].replace(/(.{5})/g,"$1-").slice(0,-1))
+            $('#v-id').text(data['voucher'].replace(/(.{5})/g, "$1-").slice(0, -1))
             if ($('#duration').val()) {
-                let hours = 'hrs'
-                if($('#duration').val() <= 1){
-                    hours = 'hr'
+                if ($('#duration').val() > 1) {
+                    let hours = 'hrs'
+                } else {
+                    let hours = 'hr'
                 }
                 $('#v-duration').show().append($('#duration').val() + hours)
             }
@@ -37,7 +38,7 @@ $('form').submit(function (e) {
         }
     });
 });
-$('#v-id').click(function (e){
+$('#v-id').click(function (e) {
     e.preventDefault();
     navigator.share({
         title: 'Voucher',
