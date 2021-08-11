@@ -6,4 +6,4 @@ COPY --chown=www-data:www-data ./ /var/www
 COPY ./resources/nginx.conf /etc/nginx/nginx.conf
 COPY ./resources/php.ini $PHP_INI_DIR/php.ini
 RUN composer install -d /var/www
-CMD chmod o+rw /var/www -R; php-fpm -D; nginx; tail -F /dev/null;
+CMD php-fpm -D; nginx; tail -F /dev/null;
