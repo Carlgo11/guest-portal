@@ -10,8 +10,8 @@ services:
       MYSQL_DATABASE: guest-portal
       MYSQL_PORT: 3306
       UNIFI_USER: guest-portal
-      UNIFI_PASSWORD: ***REMOVED***
-      UNIFI_URL: https://***REMOVED***
+      UNIFI_PASSWORD: password
+      UNIFI_URL: https://192.168.0.1
       UNIFI_SITE: default
       UNIFI_VERSION: 6.0.43
       UNIFI_VERIFY_CERT: 0
