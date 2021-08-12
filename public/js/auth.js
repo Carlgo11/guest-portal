@@ -9,6 +9,15 @@ $(document).ready(function () {
 
 $('#manual').click(function () {
     displayView('#approval');
+    const usp = new URLSearchParams(window.location.search);
+    setInterval(function () {
+        if (navigator.onLine) {
+            displayView('#success');
+            setTimeout(function () {
+                window.location.replace(decodeURIComponent(usp.get('url')));
+            }, 2000);
+        }
+    }, 5000);
 })
 
 $('#otp').keyup(function () {
