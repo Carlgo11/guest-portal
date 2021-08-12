@@ -1,7 +1,18 @@
 {
-    "require": {
-        "art-of-wifi/unifi-api-client": "^1.1",
-        "ext-mysqli": "*",
-        "twig/twig": ">= 3.0"
+  "name": "carlgo11/guest-portal",
+  "homepage": "https://github.com/carlgo11/guest-portal.git",
+  "autoload": {
+    "psr-4": {
+      "Carlgo11\\Guest_Portal\\": "src/"
     }
+  },
+  "require": {
+    "php": ">= 8.0",
+    "art-of-wifi/unifi-api-client": "^1.1",
+    "ext-mysqli": "*",
+    "twig/twig": ">= 3.0"
+  },
+  "require-dev": {
+    "phpunir/phpunit": ">=9.1.4"
+  }
 }

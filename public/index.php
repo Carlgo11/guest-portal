@@ -3,7 +3,7 @@
 use JetBrains\PhpStorm\NoReturn;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-use com\carlgo11\guestportal\GuestPortal;
+use portal\GuestPortal;
 
 #[NoReturn] function send($message, $code = 200)
 {

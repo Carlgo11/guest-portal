@@ -1,8 +1,7 @@
 <?php
 
 
-namespace com\carlgo11\guestportal;
-
+namespace Carlgo11\Guest_Portal;
 
 use DateTime;
 use Exception;

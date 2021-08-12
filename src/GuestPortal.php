@@ -1,7 +1,7 @@
 <?php
 
 
-namespace com\carlgo11\guestportal;
+namespace Carlgo11\Guest_Portal;
 
 
 use DateTime;
@@ -11,7 +11,7 @@ class GuestPortal
 {
     public function __construct()
     {
-        require_once __DIR__ . '/../../../../vendor/autoload.php';
+        require_once __DIR__ . '/../vendor/autoload.php';
     }
 
     public function validateCode(string|int $code): ?Voucher

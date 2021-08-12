@@ -1,11 +1,10 @@
 <?php
 
-use com\carlgo11\guestportal\GuestPortal;
+use Carlgo11\Guest_Portal\GuestPortal;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../src/com/carlgo11/guest-portal/GuestPortal.php';
 $gp = new GuestPortal();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
@@ -29,6 +28,5 @@ $twig = new Environment($loader, [
     'cache' => '/tmp/.compilation_cache',
     'debug' => TRUE,
 ]);
-$vars = ['vouchers' => $gp->listVouchers];
 $template = $twig->load('admin.twig');
 echo $template->render();

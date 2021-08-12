@@ -1,6 +1,6 @@
 <?php
 
-namespace com\carlgo11\guestportal;
+namespace Carlgo11\Guest_Portal;
 
 use UniFi_API\Client as UniFi_API;
 
