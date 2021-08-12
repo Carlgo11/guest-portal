@@ -1,10 +1,11 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use com\carlgo11\guestportal\GuestPortal;
 
-function send($message, $code = 200)
+#[NoReturn] function send($message, $code = 200)
 {
     http_response_code($code);
     die(json_encode($message));
@@ -35,9 +36,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $loader = new FilesystemLoader(__DIR__ . '/../templates');
 $twig = new Environment($loader, [
-    'cache' => './.compilation_cache',
+    'cache' => '/tmp/.compilation_cache',
     'debug' => TRUE,
 ]);
-
 $template = $twig->load('auth.twig');
 echo $template->render();
