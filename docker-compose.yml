@@ -20,10 +20,11 @@ services:
     volumes:
       - ./:/app
   db:
-    image: mariadb
+    image: linuxserver/mariadb:alpine
     container_name: db
     volumes:
       - mysql:/var/lib/mysql
+      - ./resources/db-template.sql:/docker-entrypoint-initdb.d/db.sql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: guest-portal
