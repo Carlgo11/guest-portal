@@ -36,7 +36,7 @@ class Voucher
         } else $this->expiry = new DateTime('+1 day');
 
         // Validate (session) duration
-        if ($duration === NULL || $duration > 0) $this->duration = $duration;
+        if ($duration > 0) $this->duration = $duration;
 
         // Validate (transfer) speed limit
         if ($speed_limit === NULL || $speed_limit > 0) $this->speed_limit = $speed_limit;

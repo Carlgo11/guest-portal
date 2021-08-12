@@ -19,7 +19,8 @@ class Database
     {
         if (!function_exists('mysqli_connect')) throw new Exception("MySQLi not enabled on the server");
         $this->mysql = mysqli_init();
-        $this->mysql->real_connect($_ENV['MYSQL_HOST'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $_ENV['MYSQL_DATABASE'], $_ENV['MYSQL_PORT']);
+        if ($this->mysql->real_connect($_ENV['MYSQL_HOST'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $_ENV['MYSQL_DATABASE'], $_ENV['MYSQL_PORT']) !== FALSE)
+            throw new Exception("Could not connect to database.");
     }
 
     public function __destruct()
@@ -27,7 +28,7 @@ class Database
         $this->mysql->close();
     }
 
-    public function fetchVoucher(int $code): ?Voucher
+    public function fetchVoucher(int $code): Voucher
     {
         $query = $this->mysql->prepare('SELECT `duration`, `uses`, `expiry`, `speed_limit`  FROM `vouchers` WHERE `id` = ?');
         $query->bind_param('s', $code);
@@ -35,15 +36,10 @@ class Database
         $fetch = $query->get_result();
         $result = $fetch->fetch_assoc();
         if ($result == NULL || sizeof($result) !== 4) throw new Exception('Code not found');
-        try {
-            require_once __DIR__ . '/Voucher.php';
-            $date = new DateTime();
-            $date->setTimestamp($result['expiry']);
-            return new Voucher($code, $result['duration'], $result['uses'], $date, $result['speed_limit']);
-        } catch (Exception $e) {
-            error_log($e);
-            return NULL;
-        }
+        require_once __DIR__ . '/Voucher.php';
+        $date = new DateTime();
+        $date->setTimestamp($result['expiry']);
+        return new Voucher($code, $result['duration'], $result['uses'], $date, $result['speed_limit']);
     }
 
     public function uploadVoucher(Voucher $voucher): bool
@@ -72,8 +68,13 @@ class Database
         return $result;
     }
 
-    public function updateUses(Voucher $voucher, $newUses)
+    public function updateUses(Voucher $voucher, int $newUses): bool
     {
-
+        $code = $voucher->id;
+        $query = $this->mysql->prepare('UPDATE `vouchers` SET `uses` = ? WHERE `id` = ?');
+        $query->bind_param('is', $newUses, $code);
+        $result = $query->execute();
+        $query->close();
+        return $result;
     }
 }

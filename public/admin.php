@@ -24,9 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $loader = new FilesystemLoader(__DIR__ . '/../templates');
-$twig = new Environment($loader, [
-    'cache' => '/tmp/.compilation_cache',
-    'debug' => TRUE,
-]);
+$twig = new Environment($loader, ['cache' => '/tmp/.compilation_cache']);
 $template = $twig->load('admin.twig');
 echo $template->render();
