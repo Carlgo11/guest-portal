@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Carlgo11\Guest_Portal;
-
 
 use DateTime;
 use Exception;
@@ -28,12 +26,12 @@ class GuestPortal
         require_once __DIR__ . '/UniFi.php';
         $uniFi = new UniFi();
         if (!$uniFi->isOnline($mac)) throw new Exception('Client not connected to guest wifi');
-            if ($uniFi->authorizeGuest($mac, $voucher, $ap)) {
-                $db = new Database();
-                if ($uses = $voucher->uses < 2) $db->removeVoucher($voucher);
-                else $db->updateUses($voucher, $uses - 1);
-                return true;
-            }
+        if ($uniFi->authorizeGuest($mac, $voucher, $ap)) {
+            $db = new Database();
+            if ($uses = $voucher->uses < 2) $db->removeVoucher($voucher);
+            else $db->updateUses($voucher, $uses - 1);
+            return true;
+        }
         return false;
     }
 

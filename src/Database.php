@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Carlgo11\Guest_Portal;
 
 use DateTime;
@@ -19,7 +18,7 @@ class Database
     {
         if (!function_exists('mysqli_connect')) throw new Exception("MySQLi not enabled on the server");
         $this->mysql = mysqli_init();
-        if ($this->mysql->real_connect($_ENV['MYSQL_HOST'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $_ENV['MYSQL_DATABASE'], $_ENV['MYSQL_PORT']) !== FALSE)
+        if ($this->mysql->real_connect($_ENV['MYSQL_HOST'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $_ENV['MYSQL_DATABASE'], $_ENV['MYSQL_PORT']) === FALSE)
             throw new Exception("Could not connect to database.");
     }
 

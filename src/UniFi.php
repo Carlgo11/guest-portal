@@ -4,7 +4,7 @@ namespace Carlgo11\Guest_Portal;
 
 use UniFi_API\Client as UniFi_API;
 
-require_once __DIR__ . '/../../../../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 class UniFi
 {

@@ -3,24 +3,18 @@ services:
 
   php:
     build: .
-    environment:
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_USER: guest-portal
-      MYSQL_PASSWORD: guest-portal
-      MYSQL_DATABASE: guest-portal
-      UNIFI_USER: guest-portal
-      UNIFI_PASSWORD: password
-      UNIFI_URL: https://192.168.0.1
-      UNIFI_SITE: default
-      UNIFI_VERSION: 6.0.43
-      UNIFI_VERIFY_CERT: 0
+    restart: unless-stopped
+    container_name: guest-portal_php
     volumes:
-      - "./:/var/www:ro"
+      - "./:/var/www"
+    env_file:
+      - mysql.env
+      - unifi.env
 
   nginx:
     image: nginx
     restart: unless-stopped
+    container_name: guest-portal_nginx
     user: nginx
     volumes:
       - "./resources/nginx.conf:/etc/nginx/nginx.conf:ro"
@@ -33,14 +27,15 @@ services:
 
   db:
     image: linuxserver/mariadb:alpine
+    restart: unless-stopped
+    container_name: guest-portal_db
     volumes:
-      - mysql:/var/lib/mysql
-      - ./resources/db-template.sql:/docker-entrypoint-initdb.d/db.sql
+      - "mysql:/var/lib/mysql"
+      - "./resources/db-template.sql:/config/initdb.d/db.sql"
     environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: 1
-      MYSQL_USER: guest-portal
-      MYSQL_PASSWORD: guest-portal
-      MYSQL_DATABASE: guest-portal
+      MYSQL_ROOT_PASSWORD: password
+    env_file:
+      - mysql.env
 
 volumes:
   mysql:
