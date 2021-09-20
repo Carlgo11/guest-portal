@@ -35,12 +35,12 @@ jobs:
             carlgo11/guest-portal:frontend
             ghcr.io/carlgo11/guest-portal:frontend
       - name: Build and Push Backend
-          uses: docker/build-push-action@v2
-          with:
-            context: .
-            file: Docker/Backend.docker
-            platforms: linux/amd64,linux/arm/v7,linux/arm64
-            push: true
-            tags: |
-              carlgo11/guest-portal:backend
-              ghcr.io/carlgo11/guest-portal-docker:backend
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Docker/Backend.docker
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            carlgo11/guest-portal:backend
+            ghcr.io/carlgo11/guest-portal-docker:backend
