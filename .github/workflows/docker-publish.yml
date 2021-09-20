@@ -1,22 +1,46 @@
-name: Docker Push
-on:
-  release:
-    types: published
+name: Publish Images
+
+on: [push]
+
 jobs:
-  Build:
+  github_registry:
+    name: Publish to GitHub Cointainer Registry
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: crazy-max/ghaction-docker-buildx@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Setup Docker QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
         with:
-          buildx-version: latest
-          qemu-version: latest
-      - name: Docker build
-        run: |
-          echo "${{ secrets.DOCKER }}" | docker login --username carlgo11 --password-stdin
-          docker buildx create --use
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          echo VERSION=$VERSION
-          docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64 --rm --tag carlgo11/guest-portal:latest --tag carlgo11/tempfiles-backend:$VERSION --push --compress .
+          registry: ghcr.io
+          username: ${{ GITHUB.ACTOR }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and Push Frontend
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Docker/Frontend.docker
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            carlgo11/guest-portal:frontend
+            ghcr.io/carlgo11/guest-portal:frontend
+      - name: Build and Push Backend
+          uses: docker/build-push-action@v2
+          with:
+            context: .
+            file: Docker/Backend.docker
+            platforms: linux/amd64,linux/arm/v7,linux/arm64
+            push: true
+            tags: |
+              carlgo11/guest-portal:backend
+              ghcr.io/carlgo11/guest-portal-docker:backend
