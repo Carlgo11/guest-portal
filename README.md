@@ -7,48 +7,64 @@
 
 ## Usage
 
-```BASH
-docker run -p 80:80 carlgo11/guest-portal
-```
+### Docker Compose
 
-Optionally, add some background images:
+Here's a template docker-compose.yml file:
 
-```BASH
-docker run -p 80:80 -v $(pwd)/bg.webp:/opt/www/img/bg.webp -v $(pwd)/bg.jpg:/opt/www/img/bg.jpg carlgo11/guest-portal
+```YAML
+version: "3.3"
+services:
+
+  backend:
+    image: carlgo11/guest-portal:backend
+    restart: unless-stopped
+    volumes:
+      - "./:/var/www"
+    env_file:
+      - mysql.env
+      - unifi.env
+
+  frontend:
+    image: carlgo11/guest-portal:frontend
+    restart: unless-stopped
+    user: nginx
+    volumes:
+      - "./resources/nginx.conf:/etc/nginx/nginx.conf:ro"
+    read_only: true
+    tmpfs:
+      - /tmp
+    ports:
+      - "8080:8080"
+
+  database:
+    image: linuxserver/mariadb:alpine
+    restart: unless-stopped
+    volumes:
+      - "mysql:/var/lib/mysql"
+      - "./resources/db-template.sql:/config/initdb.d/db.sql"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    env_file:
+      - mysql.env
+
+volumes:
+  mysql:
 ```
 
 ### Environment variables
 
 |Name|Default|Description|Example|
 |----|-------|-----------|-------|
+|MYSQL_HOST| |MySQL server url|database.docker/127.0.0.1
+|MYSQL_PORT| |MySQL server port|3306
+|MYSQL_USER| |MySQL username|guest-portal
+|MYSQL_PASSWORD| |MySQL password|password
+|MYSQL_DATABASE| |MySQL database name|guest-portal
 |UNIFI_USER| |UniFi Hotspot username|guest-portal
 |UNIFI_PASSWORD| |UniFi Hotspot password|password
 |UNIFI_URL| |UniFi Controller IP/URL & port|<https://192.168.1.2:8443>
 |UNIFI_SITE|default|UniFi Site|default
 |UNIFI_VERSION| |Controller version|5.13.32
-
-### Docker Compose
-
-Here's a template docker-compose.yml file:
-
-```YAML
-version: '3.1'
-services:
-  guest-portal:
-    image: carlgo11/guest-portal
-    ports:
-      - 8080:80
-    environment:
-      - UNIFI_USER=guest-portal
-      - UNIFI_PASSWORD=abc123
-      - UNIFI_URL=https://192.168.1.2:8443
-      - UNIFI_SITE=default
-      - UNIFI_VERSION=5.13.32
-    volumes:
-      - ./bg.jpg:/opt/www/img/bg.jpg
-      - ./bg.webp:/opt/www/img/bg.webp
-    restart: on-failure
-```
 
 ## Example portal showcase
 
