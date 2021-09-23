@@ -43,4 +43,4 @@ jobs:
           push: true
           tags: |
             carlgo11/guest-portal:backend
-            ghcr.io/carlgo11/guest-portal-docker:backend
+            ghcr.io/carlgo11/guest-portal:backend
