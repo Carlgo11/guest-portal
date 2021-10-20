@@ -40,7 +40,7 @@ class Voucher
         else throw new Exception("Session expiry date is in the past");
 
         // Validate (download|upload) speed limit
-        if ($speed_limit > 0) $this->speed_limit = $speed_limit;
+        if ($speed_limit >= 0) $this->speed_limit = $speed_limit;
         else throw new Exception("Speed limit must be greater than 0");
     }
 
