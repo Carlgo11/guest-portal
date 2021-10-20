@@ -9,16 +9,15 @@
     <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" sizes="256x256"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-icons.min.css"/>
-    <link rel="stylesheet" href="/css/bootstrap-datepicker3.min.css" integrity="sha512-rxThY3LYIfYsVCWPCW9dB0k+e3RZB39f23ylUYTEuZMDrN/vRqLdaCBo/FbvVT6uC2r0ObfPzotsfKF9Qc5W5g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/main.css"/>
     {% block stylesheets %}{% endblock %}
 </head>
 
 <body>
 <picture>
-    <source srcset="/img/bg-lg.avif 1920w, /img/bg.avif 4096w" type="image/avif">
-    <source srcset="/img/bg-lg.webp 1920w, /img/bg.webp 4096w" type="image/webp">
-    <img srcset="/img/bg-lg.jpg 1920w, /img/bg.jpg 4096w"  src="/img/bg.jpg" draggable="false" class="background d-print-none">
+    <source srcset="/img/bg/bg-lg.avif 1920w, /img/bg/bg.avif 4096w" type="image/avif">
+    <source srcset="/img/bg/bg-lg.webp 1920w, /img/bg/bg.webp 4096w" type="image/webp">
+    <img srcset="/img/bg/bg-lg.jpg 1920w, /img/bg/bg.jpg 4096w"  src="/img/bg/bg.jpg" draggable="false" class="background d-print-none">
 </picture>
 <div class="container">
     {% block content%}{% endblock %}
@@ -29,7 +28,6 @@
 <script src="/js/bootstrap.js"></script>
 <script src="/js/main.js"></script>
 {% block javascript %}{% endblock %}
-<script src="/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

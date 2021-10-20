@@ -9,14 +9,14 @@ class Voucher
 {
     private int $id;
     private int $uses;
-    private DateTime|null $expiry;
-    private int|null $duration;
-    private int|null $speed_limit;
+    private DateTime $expiry;
+    private DateTime $duration;
+    private int $speed_limit;
 
     /**
      * @throws Exception if provided input is in an unexpected/invalid format.
      */
-    public function __construct(?int $uuid, int $duration, int $uses = 1, DateTime $expiry = NULL, int $speed_limit = NULL)
+    public function __construct(?int $uuid, DateTime $duration, int $uses = 1, DateTime $expiry = NULL, int $speed_limit = 0)
     {
         // Validate UUID
         if ($uuid === NULL) $this->id = $this->generateUUID();
@@ -32,14 +32,16 @@ class Voucher
         // Validate (voucher) expiry date
         if ($expiry !== NULL) {
             if ($expiry > new DateTime()) $this->expiry = $expiry;
-            else throw new Exception("Expiry date is in the past");
+            else throw new Exception("Voucher expiry date is in the past");
         } else $this->expiry = new DateTime('+1 day');
 
         // Validate (session) duration
-        if ($duration > 0) $this->duration = $duration;
+        if ($duration > new DateTime()) $this->duration = $duration;
+        else throw new Exception("Session expiry date is in the past");
 
-        // Validate (transfer) speed limit
-        if ($speed_limit === NULL || $speed_limit > 0) $this->speed_limit = $speed_limit;
+        // Validate (download|upload) speed limit
+        if ($speed_limit > 0) $this->speed_limit = $speed_limit;
+        else throw new Exception("Speed limit must be greater than 0");
     }
 
     /**
@@ -56,7 +58,7 @@ class Voucher
      */
     private function generateUUID(): int
     {
-        return (int)str_pad(random_int(0, 99999_99999), 10, '0');
+        return (int)str_pad(random_int(min: 0, max: (int)9999999999), length: 10, pad_string: '0');
     }
 
     public function __toString()

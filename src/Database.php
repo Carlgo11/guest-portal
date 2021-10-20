@@ -45,14 +45,15 @@ class Database
     {
         $id = $voucher->id;
         $uses = $voucher->uses;
-        /** @var DateTime $expiry */
-        $expiry = $voucher->expiry;
-        $expiry = $expiry->getTimestamp();
-        $duration = (int)$voucher->duration;
+        $expiry = ($voucher->expiry)->getTimestamp();
+        $duration = ($voucher->duration)->getTimestamp();
         $speed_limit = $voucher->speed_limit;
         $query = $this->mysql->prepare('INSERT INTO `vouchers` (`id`, `uses`, `expiry`, `duration`, `speed_limit`) VALUES (?, ?, ?, ?, ?)');
+        error_log($this->mysql->error);
         $query->bind_param('siiii', $id, $uses, $expiry, $duration, $speed_limit);
+        error_log($this->mysql->error);
         $result = $query->execute();
+        error_log($this->mysql->error);
         $query->close();
         return $result;
     }

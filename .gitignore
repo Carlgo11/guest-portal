@@ -1,6 +1,5 @@
 .*
 vendor
 *.lock
-public/img/bg.*
-public/img/bg-*.*
+resources/images/**
 *.env

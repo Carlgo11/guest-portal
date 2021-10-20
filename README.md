@@ -12,14 +12,15 @@
 Here's a template docker-compose.yml file:
 
 ```YAML
-version: "3.3"
+version: "3.7"
 services:
 
   backend:
     image: carlgo11/guest-portal:backend
     restart: unless-stopped
-    volumes:
-      - "./:/var/www"
+    read_only: true
+    tmpfs:
+      - /tmp
     env_file:
       - mysql.env
       - unifi.env
@@ -29,7 +30,8 @@ services:
     restart: unless-stopped
     user: nginx
     volumes:
-      - "./resources/nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "./resources/nginx.conf:/etc/nginx/nginx.conf"
+      - "./resources/images/:/guest-portal/public/img/bg/"
     read_only: true
     tmpfs:
       - /tmp
@@ -41,7 +43,7 @@ services:
     restart: unless-stopped
     volumes:
       - "mysql:/var/lib/mysql"
-      - "./resources/db-template.sql:/config/initdb.d/db.sql"
+      - "./resources/db-template.sql:/config/initdb.d/db.sql:ro"
     environment:
       MYSQL_ROOT_PASSWORD: password
     env_file:

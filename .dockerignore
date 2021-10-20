@@ -1,2 +1,5 @@
 .*
 vendor
+public/img/bg*
+composer.lock
+*.env

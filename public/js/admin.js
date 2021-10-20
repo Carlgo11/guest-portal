@@ -4,8 +4,9 @@ $('form').submit(function (e) {
 
     const data = {
         uses: $('#uses').val(),
-        expiry: $('#expiry').val(),
-        duration: $('#duration').val()
+        expiry: new Date($('#validity').val()).getTime() / 1000,
+        duration: new Date($('#duration').val()).getTime() / 1000
+
     };
 
     $.ajax({
@@ -19,18 +20,13 @@ $('form').submit(function (e) {
             displayView('#voucher-view');
             $('#v-id').text(data['voucher'].replace(/(.{5})/g, "$1-").slice(0, -1))
             if ($('#duration').val()) {
-                if ($('#duration').val() > 1) {
-                    let hours = 'hrs'
-                } else {
-                    let hours = 'hr'
-                }
-                $('#v-duration').show().append($('#duration').val() + hours)
+                $('#v-duration').show().append($('#duration').val())
             }
             if ($('#speed').val()) {
                 $('#v-speed').show().append($('#speed').val() + 'MiB/s')
             }
-            if ($('#expiry').val()) {
-                $('#v-expire').show().append($('#expiry').val())
+            if ($('#validity').val()) {
+                $('#v-expire').show().append($('#validity').val())
             }
         },
         error: function (res) {
@@ -50,3 +46,13 @@ $('#v-id').click(function (e) {
         console.log(`Couldn't share because of`, err.message);
     });
 })
+
+$(function () {
+    const duration = new Date()
+    duration.setHours(duration.getHours() + 24);
+    $('#duration').val(duration.toLocaleString("sv-SE").slice(0, -3))
+
+    const validity = new Date()
+    validity.setHours(validity.getHours() + 12);
+    $('#validity').val(validity.toLocaleString("sv-SE").slice(0, -3))
+});

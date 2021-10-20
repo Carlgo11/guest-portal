@@ -38,14 +38,13 @@ class GuestPortal
     /**
      * @throws Exception
      */
-    public function createVoucher(int $uses, DateTime $expiry, int $duration): ?string
+    public function createVoucher(int $uses, DateTime $expiry, DateTime $duration): ?string
     {
         require_once __DIR__ . '/Database.php';
         require_once __DIR__ . '/Voucher.php';
         $voucher = new Voucher(null, $duration, $uses, $expiry);
         $db = new Database();
-        if ($db->uploadVoucher($voucher))
-            return $voucher->id;
+        if ($db->uploadVoucher($voucher)) return $voucher->id;
         return null;
     }
 

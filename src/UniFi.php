@@ -2,6 +2,7 @@
 
 namespace Carlgo11\Guest_Portal;
 
+use DateTime;
 use UniFi_API\Client as UniFi_API;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -24,7 +25,12 @@ class UniFi
 
     public function authorizeGuest(string $MACAddress, Voucher $voucher, string $ap = NULL): bool
     {
-        return $this->unifi_connection->authorize_guest($MACAddress, $voucher->duration * 60, $voucher->speed_limit, $voucher->speed_limit, $ap);
+        $now = new DateTime();
+        $duration = $voucher->duartion;
+        $diff = $now->diff($duration);
+        $speed_limit = $voucher->speed_limit * 1024;
+
+        return $this->unifi_connection->authorize_guest(mac: $MACAddress, minutes: $diff->i, up: $speed_limit, down: $speed_limit, megabytes: null, ap_mac: $ap);
     }
 
     public function isOnline($mac): bool

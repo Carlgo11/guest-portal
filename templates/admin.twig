@@ -17,24 +17,35 @@
       </div>
 
       <div class="form-floating mb-3">
-        <input type="datetime-local" id="expiry" class="form-control" placeholder="yyyy/mm/dd hh:mm" required>
-        <label for="expiry">Expiry</label>
+        <input type="datetime-local" id="duration" class="form-control" placeholder="yyyy/mm/dd hh:mm" required>
+        <label for="duration">Duration</label>
       </div>
 
-      <hr>
+      <div class="form-floating mb-3">
+        <a class="" data-bs-toggle="collapse" href="#advanced" role="button" aria-expanded="false"
+           aria-controls="advanced" style="text-decoration: none;margin-bottom:1rem">
+          <div class="col-12" style="border-top:rgba(0, 0, 0, 0.18) 1px solid;">
+            <div class="text-center border-top-0"
+                 style="background:rgba(0, 0, 0, 0.18);color:initial;text-decoration:none!important;width:min-content;padding:.5em;margin:auto;">
+              Advanced
+            </div>
+          </div>
+        </a>
+        <div class="collapse" id="advanced" style="margin: 1rem 0">
 
-      <div class="row">
-        <div class="form-floating mb-3 col-10" style="padding-right:0">
-          <input type="number" id="duration" class="form-control" placeholder="1" value="12" required>
-          <label for="duration">Duration</label>
-        </div>
-        <div class="col-2 align-middle"
-             style="padding: 1em 0 1em 0;background:#ccc;border:1px solid #bbb;margin-bottom: 1em;border-left:0;">Hours
+          <div class="form-floating mb-3">
+            <input type="datetime-local" id="validity" class="form-control" placeholder="yyyy/mm/dd hh:mm" required>
+            <label for="validity">Voucher expiration</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="number" id="speed" class="form-control">
+            <label for="validity">MiB/s</label>
+          </div>
         </div>
       </div>
 
       <div class="justify-content-md-start">
-        <button type="submit" class="btn btn-lg btn-success">Create</button>
+        <button type="submit" class="btn btn-lg btn-success col-5">Create</button>
       </div>
     </form>
 
@@ -43,9 +54,9 @@
       <h1 class="noselect">Voucher</h1>
       <div class="p-3 voucher row">
         <div class="col-12" style="padding: 0"><h2 id="v-id" style="cursor: pointer"></h2></div>
-        <div class="col noselect" id="v-duration" style="display: none">Duration: </div>
-        <div class="col noselect" id="v-speed" style="display: none">Speed: </div>
-        <div class="col noselect d-none d-lg-block" id="v-expire" style="display: none">Expires: </div>
+        <div class="col noselect" id="v-duration" style="display: none">Duration:</div>
+        <div class="col noselect" id="v-speed" style="display: none">Speed:</div>
+        <div class="col noselect d-none d-lg-block" id="v-expire" style="display: none">Expires:</div>
       </div>
     </div>
 
