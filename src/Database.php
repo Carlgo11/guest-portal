@@ -36,9 +36,11 @@ class Database
         $result = $fetch->fetch_assoc();
         if ($result == NULL || sizeof($result) !== 4) throw new Exception('Code not found');
         require_once __DIR__ . '/Voucher.php';
-        $date = new DateTime();
-        $date->setTimestamp($result['expiry']);
-        return new Voucher($code, $result['duration'], $result['uses'], $date, $result['speed_limit']);
+        $expiry = new DateTime();
+        $expiry->setTimestamp($result['expiry']);
+        $duration = new DateTime();
+        $duration->setTimestamp($result['duration']);
+        return new Voucher($code, $duration, $result['uses'], $expiry, $result['speed_limit']);
     }
 
     public function uploadVoucher(Voucher $voucher): bool
@@ -49,11 +51,8 @@ class Database
         $duration = ($voucher->duration)->getTimestamp();
         $speed_limit = $voucher->speed_limit;
         $query = $this->mysql->prepare('INSERT INTO `vouchers` (`id`, `uses`, `expiry`, `duration`, `speed_limit`) VALUES (?, ?, ?, ?, ?)');
-        error_log($this->mysql->error);
         $query->bind_param('siiii', $id, $uses, $expiry, $duration, $speed_limit);
-        error_log($this->mysql->error);
         $result = $query->execute();
-        error_log($this->mysql->error);
         $query->close();
         return $result;
     }

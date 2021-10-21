@@ -4,6 +4,7 @@ namespace Carlgo11\Guest_Portal;
 
 use DateTime;
 use Exception;
+use function React\Promise\race;
 
 class Voucher
 {
@@ -28,7 +29,6 @@ class Voucher
         // Validate uses
         if ($uses >= 0 && $uses < 255) $this->uses = $uses;
         else throw new Exception("Uses input invalid");
-
         // Validate (voucher) expiry date
         if ($expiry !== NULL) {
             if ($expiry > new DateTime()) $this->expiry = $expiry;
@@ -63,6 +63,7 @@ class Voucher
 
     public function __toString()
     {
+        error_log("41");
         return (string)$this->id;
     }
 }

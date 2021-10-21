@@ -15,7 +15,8 @@ class UniFi
     public function __construct()
     {
         $this->unifi_connection = new UniFi_API($_ENV['UNIFI_USER'], $_ENV['UNIFI_PASSWORD'], $_ENV['UNIFI_URL'], $_ENV['UNIFI_SITE'], $_ENV['UNIFI_VERSION'], $_ENV['UNIFI_VERIFY_CERT']);
-        return $this->unifi_connection->login();
+        if (!($login = $this->unifi_connection->login())) throw new \Exception("Unable to access Unifi system.");
+        return $login;
     }
 
     public function __destruct()
