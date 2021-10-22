@@ -17,7 +17,7 @@ class GuestPortal
         require_once __DIR__ . '/Database.php';
         $code = (int)filter_var(preg_replace('/\D/', '', $code), FILTER_SANITIZE_NUMBER_INT);
         $db = new Database();
-        if (strlen($code) !== 10) throw new Exception('Invalid code format');
+        if (strlen($code) !== 10) throw new Exception('Invalid code format', 400);
         return $db->fetchVoucher($code);
     }
 
@@ -25,7 +25,7 @@ class GuestPortal
     {
         require_once __DIR__ . '/UniFi.php';
         $uniFi = new UniFi();
-        if (!$uniFi->isOnline($mac)) throw new Exception('Client not connected to guest wifi');
+        if (!$uniFi->isOnline($mac)) throw new Exception('Client not connected to guest wifi', 412);
         if ($uniFi->authorizeGuest($mac, $voucher, $ap)) {
             $db = new Database();
             if ($uses = $voucher->uses < 2) $db->removeVoucher($voucher);

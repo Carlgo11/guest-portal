@@ -1,63 +1,11 @@
 {% extends 'default.twig' %}
 
 {% block content %}
-  <div class="main col-12 col-md-10 col-xl-4">
-
-    <!-- Form -->
-    <div id="form" class="view" style="display: block">
-      <form method="POST" action="">
-        <h1 class="title noselect">Guest Wi-Fi</h1>
-        <div class="input-group" style="margin: 0 1vw;width: unset;">
-          <input class="form-control" type="text" placeholder="Enter your login code" pattern="^\d{5}(?:-)?\d{5}$"
-                 autocomplete="one-time-code" autofocus="" autocapitalize="off" inputmode="numeric"
-                 required="" id="otp" maxlength="11" minlength="10" name="code">
-
-          <span class="input-group-btn">
-                <button type="submit" class="btn btn-success ">Connect <i class="bi bi-chevron-right"></i></button>
-            </span>
-        </div>
-
-        <div class="separator noselect">or</div>
-        <button type="button" class="btn btn-danger form-control" id="manual">Manual
-          approval
-        </button>
-      </form>
-    </div>
-
-    <!-- Loading -->
-    <div id="loading" class="view">
-      <h1>Communicating with network...</h1>
-      <div>
-        <div class="spinner-grow text-success" role="status">
-        </div>
-      </div>
-    </div>
-
-    <!-- Awaiting approval -->
-    <div id="approval" class="view">
-      <div class="spinner">
-        <div class="spinner-grow spinner-grow-lg text-success" role="status">
-        </div>
-      </div>
-      <div class="btn-back noselect"><i class="bi bi-chevron-left"></i> Back</div>
-      <h2 class="noselect">Waiting for approval...</h2>
-    </div>
-
-    <!-- Error -->
-    <div id="error" class="view">
-      <div class="btn-back noselect"><i class="bi bi-chevron-left"></i> Back</div>
-      <div id="error-container">
-        <h1>☹️</h1>
-        <h2 id="error-msg">Error:</h2>
-      </div>
-    </div>
-
-    <!-- Success -->
-    <div id="success" class="view">
-      <h1>Welcome! 😄</h1>
-    </div>
-
-  </div>
+  {% include 'loading.twig' %}
+  {% include 'approval.twig' %}
+  {% include 'error.twig' %}
+  {% include 'success.twig' %}
+  {% include 'form.twig' %}
 {% endblock %}
 
 {% block javascript %}

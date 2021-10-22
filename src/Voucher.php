@@ -23,7 +23,7 @@ class Voucher
         if ($uuid === NULL) $this->id = $this->generateUUID();
         else {
             if (strlen($uuid) === 10) $this->id = $uuid;
-            else throw new Exception("UUID input invalid");
+            else throw new Exception("UUID input invalid", 400);
         }
 
         // Validate uses
@@ -32,16 +32,16 @@ class Voucher
         // Validate (voucher) expiry date
         if ($expiry !== NULL) {
             if ($expiry > new DateTime()) $this->expiry = $expiry;
-            else throw new Exception("Voucher expiry date is in the past");
+            else throw new Exception("Voucher expiry date is in the past", 400);
         } else $this->expiry = new DateTime('+1 day');
 
         // Validate (session) duration
         if ($duration > new DateTime()) $this->duration = $duration;
-        else throw new Exception("Session expiry date is in the past");
+        else throw new Exception("Session expiry date is in the past", 400);
 
         // Validate (download|upload) speed limit
         if ($speed_limit >= 0) $this->speed_limit = $speed_limit;
-        else throw new Exception("Speed limit must be greater than 0");
+        else throw new Exception("Speed limit must be greater than 0", 400);
     }
 
     /**

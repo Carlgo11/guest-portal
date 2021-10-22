@@ -16,7 +16,7 @@ class Database
      */
     public function __construct()
     {
-        if (!function_exists('mysqli_connect')) throw new Exception("MySQLi not enabled on the server");
+        if (!function_exists('mysqli_connect')) throw new Exception("MySQLi not enabled on the server", 501);
         $this->mysql = mysqli_init();
         if ($this->mysql->real_connect($_ENV['MYSQL_HOST'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $_ENV['MYSQL_DATABASE'], $_ENV['MYSQL_PORT']) === FALSE)
             throw new Exception("Could not connect to database.");
@@ -34,7 +34,7 @@ class Database
         $query->execute();
         $fetch = $query->get_result();
         $result = $fetch->fetch_assoc();
-        if ($result == NULL || sizeof($result) !== 4) throw new Exception('Code not found');
+        if ($result == NULL || sizeof($result) !== 4) throw new Exception('Code not found', 404);
         require_once __DIR__ . '/Voucher.php';
         $expiry = new DateTime();
         $expiry->setTimestamp($result['expiry']);

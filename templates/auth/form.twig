@@ -1,0 +1,20 @@
+<!-- Form view -->
+<div id="form" class="view" style="display: block">
+  <form method="POST" action="">
+    <h1 class="title noselect">Guest Wi-Fi</h1>
+    <div class="input-group" style="margin: 0 1vw;width: unset;">
+      <input class="form-control" type="text" placeholder="Enter your login code" pattern="^\d{5}(?:-)?\d{5}$"
+             autocomplete="off" autofocus="" autocapitalize="off" inputmode="numeric"
+             required="" id="otp" maxlength="11" minlength="10" name="code">
+
+      <span class="input-group-btn">
+                <button type="submit" class="btn btn-success ">Connect <i class="bi bi-chevron-right"></i></button>
+            </span>
+    </div>
+
+    <div class="separator noselect">or</div>
+    <button type="button" class="btn btn-danger form-control" id="manual">Manual
+      approval
+    </button>
+  </form>
+</div>

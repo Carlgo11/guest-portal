@@ -5,70 +5,9 @@
 {% endblock %}
 
 {% block content %}
-  <div class="main col-12 col-md-6 col-lg-4" style="padding:1.2em">
-
-    <!-- Form view -->
-    <form class="view" style="display: block">
-      <h1>Create voucher</h1>
-
-      <div class="form-floating mb-3">
-        <input type="number" id="uses" class="form-control" placeholder="1" value="1" required>
-        <label for="uses">Uses</label>
-      </div>
-
-      <div class="form-floating mb-3">
-        <input type="datetime-local" id="duration" class="form-control" placeholder="yyyy/mm/dd hh:mm" required>
-        <label for="duration">Duration</label>
-      </div>
-
-      <div class="form-floating mb-3">
-        <a class="" data-bs-toggle="collapse" href="#advanced" role="button" aria-expanded="false"
-           aria-controls="advanced" style="text-decoration: none;margin-bottom:1rem">
-          <div class="col-12" style="border-top:rgba(0, 0, 0, 0.18) 1px solid;">
-            <div class="text-center border-top-0"
-                 style="background:rgba(0, 0, 0, 0.18);color:initial;text-decoration:none!important;width:min-content;padding:.5em;margin:auto;">
-              Advanced
-            </div>
-          </div>
-        </a>
-        <div class="collapse" id="advanced" style="margin: 1rem 0">
-
-          <div class="form-floating mb-3">
-            <input type="datetime-local" id="validity" class="form-control" placeholder="yyyy/mm/dd hh:mm" required>
-            <label for="validity">Voucher expiration</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="number" id="speed" class="form-control">
-            <label for="validity">MiB/s</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="justify-content-md-start">
-        <button type="submit" class="btn btn-lg btn-success col-5">Create</button>
-      </div>
-    </form>
-
-    <!-- Voucher view -->
-    <div class="view" id="voucher-view">
-      <h1 class="noselect">Voucher</h1>
-      <div class="p-3 voucher row">
-        <div class="col-12" style="padding: 0"><h2 id="v-id" style="cursor: pointer"></h2></div>
-        <div class="col noselect" id="v-duration" style="display: none">Duration:</div>
-        <div class="col noselect" id="v-speed" style="display: none">Speed:</div>
-        <div class="col noselect d-none d-lg-block" id="v-expire" style="display: none">Expires:</div>
-      </div>
-    </div>
-
-    <!-- Error -->
-    <div id="error" class="view">
-      <div class="btn-back noselect"><i class="bi bi-chevron-left"></i> Back</div>
-      <div id="error-container">
-        <h1>☹️</h1>
-        <h2 id="error-msg">Error:</h2>
-      </div>
-    </div>
-  </div>
+  {% include 'form.twig' %}
+  {% include 'voucher.twig' %}
+  {% include 'error.twig' %}
 {% endblock %}
 
 {% block javascript %}

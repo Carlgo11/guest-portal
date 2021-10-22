@@ -5,7 +5,8 @@ $('form').submit(function (e) {
     const data = {
         uses: $('#uses').val(),
         expiry: new Date($('#validity').val()).getTime() / 1000,
-        duration: new Date($('#duration').val()).getTime() / 1000
+        duration: new Date($('#duration').val()).getTime() / 1000,
+        speed: $('#speed').val()
 
     };
 
@@ -22,8 +23,8 @@ $('form').submit(function (e) {
             if ($('#duration').val()) {
                 $('#v-duration').show().append($('#duration').val())
             }
-            if ($('#speed').val()) {
-                $('#v-speed').show().append($('#speed').val() + 'MiB/s')
+            if ($('#speed').val() > 0) {
+                $('#v-speed').show().append($('#speed').val() + ' MiB/s')
             }
             if ($('#validity').val()) {
                 $('#v-expire').show().append($('#validity').val())
@@ -43,16 +44,17 @@ $('#v-id').click(function (e) {
         title: 'Voucher',
         text: $(this).text()
     }).then(r => console.error(r)).catch(err => {
-        console.log(`Couldn't share because of`, err.message);
+        console.error(`Couldn't share because of `, err.message);
     });
 })
 
 $(function () {
     const duration = new Date()
-    duration.setHours(duration.getHours() + 24);
-    $('#duration').val(duration.toLocaleString("sv-SE").slice(0, -3))
-
-    const validity = new Date()
-    validity.setHours(validity.getHours() + 12);
-    $('#validity').val(validity.toLocaleString("sv-SE").slice(0, -3))
+    // Set minimum datetime to now
+    $('#duration').attr({"min": duration.toISOString().slice(0, -8)})
+    $('#validity').attr({"min": duration.toISOString().slice(0, -8)})
+    duration.setHours(duration.getHours() + 12)
+    $('#validity').val(duration.toISOString().slice(0, -8))
+    duration.setHours(duration.getHours() + 12)
+    $('#duration').val(duration.toISOString().slice(0, -8))
 });

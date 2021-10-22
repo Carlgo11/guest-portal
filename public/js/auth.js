@@ -40,7 +40,8 @@ $('form').submit(function (e) {
     const data = {
         code: $('#otp').val(),
         ap: usp.get('ap'),
-        mac: usp.get('id')
+        mac: usp.get('id'),
+        t: usp.get('t')
     };
 
     $.ajax({
