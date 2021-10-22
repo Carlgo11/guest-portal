@@ -12,6 +12,7 @@
 
 body {
     font-family: 'SF Pro Text', -apple-system, system-ui, 'Raleway', sans-serif;
+    background: #000;
 }
 
 h1,
@@ -196,4 +197,13 @@ label:focus,
 
 .view {
     display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .background {
+        opacity: .4;
+    }
+    .main {
+        background: #FFFFFFB2;
+    }
 }
