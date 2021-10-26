@@ -1,0 +1,11 @@
+{
+  "connect_button": "Connect",
+  "manual_button": "Manual approval",
+  "loading": "Communicating with network...",
+  "welcome": "Welcome! \uD83D\uDE04",
+  "loading_approval": "Waiting for approval...",
+  "back": "Back",
+  "default_ssid": "Guest Wi-Fi",
+  "enter_login_code": "Enter your login code",
+  "or": "or"
+}

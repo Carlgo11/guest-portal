@@ -24,7 +24,7 @@ GRANT SELECT, INSERT, UPDATE (uses), DELETE ON `guest-portal`.`vouchers` TO `gue
 SET GLOBAL event_scheduler = "ON";
 
 DELIMITER $$
-CREATE DEFINER=`guest-portal`@`%` EVENT `Delete old vouchers` ON SCHEDULE EVERY 1 HOUR STARTS '2021-10-23 23:48:34' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM `vouchers` WHERE `vouchers`.`expiry` <= UNIX_TIMESTAMP(NOW())$$
+CREATE DEFINER=`guest-portal`@`%` EVENT `Delete old vouchers` ON SCHEDULE EVERY 1 HOUR STARTS '2021-01-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM `vouchers` WHERE `vouchers`.`expiry` <= UNIX_TIMESTAMP(NOW())$$
 
 DELIMITER ;
 COMMIT;

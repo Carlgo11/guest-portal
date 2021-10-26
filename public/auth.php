@@ -2,7 +2,6 @@
 
 use JetBrains\PhpStorm\NoReturn;
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 use Carlgo11\Guest_Portal\GuestPortal;
 
@@ -16,12 +15,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $view = filter_input(INPUT_GET, 'view', FILTER_SANITIZE_STRING);
+        $language = json_decode(file_get_contents(__DIR__ . '/../language.json'), true);
         $loader = new FilesystemLoader([__DIR__ . '/../templates', __DIR__ . '/../templates/auth']);
-        $twig = new Environment($loader, ['cache' => '/tmp/.compilation_cache', 'debug' => true]);
-        $twig->addExtension(new DebugExtension());
-        $template = $twig->load('auth.twig');
-        echo $template->render(['view' => $view]);
+        $twig = new Environment($loader);
+        echo $twig->render('auth.twig', ['lang' => $language]);
         break;
 
     case 'POST':

@@ -2,11 +2,13 @@
 
 <head>
   <meta name="viewport" content="width=device-width initial-scale=1">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Guest WiFi</title>
-  <link rel="icon" href="/img/favicon.svg" type="image/x-icon"/>
-  <link rel="icon" href="/img/favicon.png" type="image/png"/>
-  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" sizes="256x256"/>
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml"/>
+  <link rel="alternate icon" href="/img/favicon.png" type="image/png"/>
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" sizes="180x180"/>
   <link rel="stylesheet" href="/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="/css/bootstrap-icons.min.css"/>
   <link rel="stylesheet" href="/css/main.css"/>
@@ -20,6 +22,7 @@
   <img srcset="/img/bg/bg-lg.jpg 1920w, /img/bg/bg.jpg 4096w" src="/img/bg/bg.jpg" draggable="false"
        onmousedown="return false" class="background d-print-none noselect">
 </picture>
+
 <div class="container">
   <div class="main col-12 col-md-6 col-lg-4" style="padding:1.2em">
     {% block content %}{% endblock %}

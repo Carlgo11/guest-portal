@@ -1,0 +1,11 @@
+{
+  "connect_button": "Anslut",
+  "manual_button": "Manuellt godkännande",
+  "loading": "Ansluter till nätverket...",
+  "welcome": "Välkommen! \uD83D\uDE04",
+  "loading_approval": "Väntar på svar...",
+  "back": "Tillbaka",
+  "default_ssid": "Gäst Wi-Fi",
+  "enter_login_code": "Ange din inloggningskod",
+  "or": "eller"
+}
