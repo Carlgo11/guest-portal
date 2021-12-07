@@ -1,7 +1,8 @@
 <?php
 
-namespace Carlgo11\Guest_Portal;
+namespace Carlgo11\Guest_Portal\Storage;
 
+use Carlgo11\Guest_Portal\Voucher;
 use DateTime;
 use Exception;
 use mysqli;

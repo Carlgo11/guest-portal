@@ -13,12 +13,18 @@ require_once __DIR__ . '/../vendor/autoload.php';
     die(json_encode($message));
 }
 
+function language(): array
+{
+    $lang = $_ENV['LANG'] ?? 'en';
+    if (is_null($file = file_get_contents(__DIR__ . "/../language_${lang}.json"))) throw new Exception('Language pack not found.');
+    return json_decode($file, true);
+}
+
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $language = json_decode(file_get_contents(__DIR__ . '/../language.json'), true);
         $loader = new FilesystemLoader([__DIR__ . '/../templates', __DIR__ . '/../templates/auth']);
         $twig = new Environment($loader);
-        echo $twig->render('auth.twig', ['lang' => $language]);
+        echo $twig->render('auth.twig', ['lang' => language()]);
         break;
 
     case 'POST':
@@ -29,7 +35,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $now = new DateTime();
         $guestportal = new GuestPortal();
         try {
-            if ($ap === NULL || $mac === NULL || $code === NULL) throw new Exception('Invalid request', 400);
+            if ($ap === NULL || $mac === NULL || $code === 0) throw new Exception('Invalid request', 400);
             $time = $now->diff(new DateTime('@' . filter_var($data['t'], 257, ['options' => ['default' => 0]])));
             if ($time->i > 5) throw new Exception('Login session expired. Rejoin the network', 412);
             if (($voucher = $guestportal->validateCode($code)) !== NULL) {
@@ -37,6 +43,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 else throw new Exception('invalid voucher', 401);
             }
         } catch (Exception $e) {
+            error_log($e);
             send(['error' => $e->getMessage()], $e->getCode() ?? 500);
         }
         break;

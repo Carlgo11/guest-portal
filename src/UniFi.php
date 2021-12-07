@@ -28,7 +28,7 @@ class UniFi
     {
         $now = new DateTime();
         $duration = $voucher->duration;
-        $diff = $now->diff($duration);
+        if (($diff = $now->diff($duration)) === NULL) throw new \Exception("Unable to process session duration.", 500);
         $speed_limit = $voucher->speed_limit * 1024;
 
         return $this->unifi_connection->authorize_guest(mac: $MACAddress, minutes: $diff->i, up: $speed_limit, down: $speed_limit, megabytes: null, ap_mac: $ap);

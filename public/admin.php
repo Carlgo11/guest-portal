@@ -12,6 +12,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
     die(json_encode($message));
 }
 
+function language(): array
+{
+    $lang = $_ENV['LANG'] ?? 'en';
+    return json_decode(file_get_contents(__DIR__ . "/../language_${lang}.json"), true);
+}
+
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $loader = new FilesystemLoader([__DIR__ . '/../templates', __DIR__ . '/../templates/admin']);
@@ -30,6 +36,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 send(['voucher' => $voucher], 201);
             } else throw new Exception('Unable to create voucher');
         } catch (Exception $e) {
+            error_log($e);
             send($e->getMessage(), $e->getCode() ?? 500);
         }
 }

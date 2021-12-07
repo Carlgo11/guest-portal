@@ -67,6 +67,7 @@ volumes:
 |UNIFI_URL| |UniFi Controller IP/URL & port|<https://192.168.1.2:8443>
 |UNIFI_SITE|default|UniFi Site|default
 |UNIFI_VERSION| |Controller version|5.13.32
+|LANG|en|Language pack to use|en
 
 ## Example portal showcase
 
