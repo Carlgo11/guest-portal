@@ -27,7 +27,7 @@ class UniFi
     public function authorizeGuest(string $MACAddress, Voucher $voucher, string $ap = NULL): bool
     {
         $now = new DateTime();
-        $duration = $voucher->duartion;
+        $duration = $voucher->duration;
         $diff = $now->diff($duration);
         $speed_limit = $voucher->speed_limit * 1024;
 

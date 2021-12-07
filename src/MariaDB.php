@@ -6,7 +6,7 @@ use DateTime;
 use Exception;
 use mysqli;
 
-class Database
+class MariaDB implements iStorage
 {
 
     private mysqli $mysql;
