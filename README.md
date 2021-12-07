@@ -30,7 +30,6 @@ services:
     restart: unless-stopped
     user: nginx
     volumes:
-      - "./resources/nginx.conf:/etc/nginx/nginx.conf"
       - "./resources/images/:/guest-portal/public/img/bg/"
     read_only: true
     tmpfs:
