@@ -9,8 +9,6 @@
   "require": {
     "php": ">= 8.0",
     "art-of-wifi/unifi-api-client": "^1.1",
-    "ext-mysqli": "*",
-    "twig/twig": ">= 3.0",
-    "ext-fileinfo": "*"
+    "twig/twig": ">= 3.0"
   }
 }
