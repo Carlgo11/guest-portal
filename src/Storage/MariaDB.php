@@ -86,6 +86,7 @@ class MariaDB implements iStorage
         $query->execute();
         $fetch = $query->get_result();
         $result = $fetch->fetch_assoc();
+        if (is_null($result)) return false;
         return $result['password'];
     }
 

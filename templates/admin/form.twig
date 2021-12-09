@@ -1,5 +1,5 @@
 <!-- Form view -->
-<form class="view" style="display: block">
+<form class="view" id="create-voucher">
   <h1 class="noselect">Create voucher</h1>
 
   <div class="form-floating mb-3">
@@ -17,13 +17,12 @@
     <a class="" data-bs-toggle="collapse" href="#advanced" role="button" aria-expanded="false"
        aria-controls="advanced" style="text-decoration: none;margin-bottom:1rem">
       <div class="col-12" style="border-top:rgba(0, 0, 0, 0.18) 1px solid;">
-        <div class="text-center border-top-0 noselect"
-             style="background:rgba(0, 0, 0, 0.18);color:initial;text-decoration:none!important;width:min-content;padding:.5em;margin:auto;">
+        <div class="text-center border-top-0 noselect" id="advanced-btn">
           Advanced
         </div>
       </div>
     </a>
-    <div class="collapse" id="advanced" style="margin: 1rem 0">
+    <div class="collapse" id="advanced">
 
       <div class="form-floating mb-3">
         <input type="datetime-local" id="validity" class="form-control" placeholder="yyyy/mm/dd hh:mm"
@@ -40,6 +39,6 @@
   </div>
 
   <div class="justify-content-md-start">
-    <button type="submit" class="btn btn-lg btn-success col-5">Create</button>
+    <button type="submit" class="btn btn-lg btn-success col-5">Create Voucher</button>
   </div>
 </form>

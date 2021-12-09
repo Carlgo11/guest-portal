@@ -3,6 +3,24 @@
     margin: 1em;
     border: 1.3px solid #ccc;
 }
+
+#advanced-btn {
+    background: rgba(0, 0, 0, 0.18);
+    color: initial;
+    text-decoration: none !important;
+    width: min-content;
+    padding: .5em;
+    margin: auto;
+}
+
+#advanced {
+    margin: 1rem 0;
+}
+
+#create-voucher {
+    display: block;
+}
+
 #v-id {
     text-align: center;
     letter-spacing: 0.12em;

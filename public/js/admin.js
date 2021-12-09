@@ -1,13 +1,13 @@
-$('form').submit(function (e) {
+$('#create-voucher').submit(function (e) {
     // Prevent browser from connecting itself to action path
     e.preventDefault();
 
     const data = {
+        type: 'voucher',
         uses: $('#uses').val(),
         expiry: new Date($('#validity').val()).getTime() / 1000,
         duration: new Date($('#duration').val()).getTime() / 1000,
         speed: $('#speed').val()
-
     };
 
     $.ajax({
@@ -34,6 +34,31 @@ $('form').submit(function (e) {
             console.error(res);
             displayView('#error');
             $('#error-msg').text('Error: ' + res.responseJSON['error']);
+        }
+    });
+});
+
+$('#add-user').submit(function (e) {
+    e.preventDefault();
+
+    const data = {
+        type: 'user',
+        username: $('#username').val(),
+        password: $('#password').val()
+    };
+
+    $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        timeout: 5000,
+        success: function () {
+            location.reload();
+        },
+        error: function (data) {
+            console.error(data);
         }
     });
 });
