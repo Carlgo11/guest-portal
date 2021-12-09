@@ -1,6 +1,7 @@
 <?php
 
 use Carlgo11\Guest_Portal\GuestPortal;
+use Carlgo11\Guest_Portal\Storage\MariaDB;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -18,6 +19,30 @@ function language(): array
     return json_decode(file_get_contents(__DIR__ . "/../language_${lang}.json"), true);
 }
 
+function authenticated($user): bool
+{
+    if (session_status() === PHP_SESSION_ACTIVE && $_SESSION['user'] === $user) return true;
+    return false;
+}
+
+function authenticate()
+{
+    $user = $_SERVER['PHP_AUTH_USER'];
+    if (isset($user)) {
+        if (authenticated($user)) return true;
+        if (($hash = (new MariaDB())->getUser($user)) !== NULL)
+            if (password_verify($_SERVER['PHP_AUTH_PW'], $hash)) {
+                session_start();
+                $_SESSION['user'] = $user;
+                return true;
+            }
+    }
+    header('HTTP/1.0 401 Unauthorized');
+    header('WWW-Authenticate: Basic realm="guest-portal"');
+    die();
+}
+
+authenticate();
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $loader = new FilesystemLoader([__DIR__ . '/../templates', __DIR__ . '/../templates/admin']);
@@ -36,7 +61,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 send(['voucher' => $voucher], 201);
             } else throw new Exception('Unable to create voucher');
         } catch (Exception $e) {
-            error_log($e);
-            send($e->getMessage(), $e->getCode() ?? 500);
+            $msg = $e->getMessage();
+            $code = $e->getCode() ?? 500;
+            error_log("${code}: ${$msg}");
+            send($msg, $code);
         }
 }

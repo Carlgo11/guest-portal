@@ -149,7 +149,7 @@ button:hover,
 label:focus,
 .btn:active,
 .btn.active {
-    outline: 0px !important;
+    outline: 0 !important;
     -webkit-appearance: none;
     box-shadow: none !important;
     border-color: #ced4da !important;
@@ -185,7 +185,6 @@ label:focus,
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;

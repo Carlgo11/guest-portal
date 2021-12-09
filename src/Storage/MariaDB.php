@@ -2,6 +2,7 @@
 
 namespace Carlgo11\Guest_Portal\Storage;
 
+use Carlgo11\Guest_Portal\User;
 use Carlgo11\Guest_Portal\Voucher;
 use DateTime;
 use Exception;
@@ -73,6 +74,25 @@ class MariaDB implements iStorage
         $code = $voucher->id;
         $query = $this->mysql->prepare('UPDATE `vouchers` SET `uses` = ? WHERE `id` = ?');
         $query->bind_param('is', $newUses, $code);
+        $result = $query->execute();
+        $query->close();
+        return $result;
+    }
+
+    public function getUser(string $username): string
+    {
+        $query = $this->mysql->prepare('SELECT `password` FROM `users` WHERE `username` = ?');
+        $query->bind_param('s', $username);
+        $query->execute();
+        $fetch = $query->get_result();
+        $result = $fetch->fetch_assoc();
+        return $result['password'];
+    }
+
+    public function createUser(string $username, string $hash): bool
+    {
+        $query = $this->mysql->prepare('INSERT INTO `users` (`username`, `password`) VALUES (?,?)');
+        $query->bind_param('ss', $username, $hash);
         $result = $query->execute();
         $query->close();
         return $result;

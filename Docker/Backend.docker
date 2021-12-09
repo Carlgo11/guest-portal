@@ -1,8 +1,8 @@
 FROM php:8-fpm-alpine
 RUN apk add --no-cache composer && \
-    docker-php-ext-install mysqli && \
-    docker-php-ext-enable mysqli
+    docker-php-ext-install mysqli
 COPY --chown=nobody:nobody ["./", "./resources/languages", "/guest-portal/"]
 COPY ./resources/php.ini $PHP_INI_DIR/php.ini
+COPY ./resources/php-www.conf /usr/local/etc/php-fpm.d/www.conf
 RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader -d /guest-portal
 USER 82

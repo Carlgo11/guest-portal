@@ -43,8 +43,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 else throw new Exception('invalid voucher', 401);
             }
         } catch (Exception $e) {
-            error_log($e);
-            send(['error' => $e->getMessage()], $e->getCode() ?? 500);
+            $msg = $e->getMessage();
+            $code = $e->getCode() ?? 500;
+            error_log($msg);
+            send(['error' => $msg], $code);
         }
         break;
 }
