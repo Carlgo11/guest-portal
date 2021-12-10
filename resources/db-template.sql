@@ -15,9 +15,6 @@ CREATE TABLE `users` (
                          `password` varchar(72) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `users` (`username`, `password`) VALUES
-    ('root', '$2y$10$GIdtEOEqP0GZGOJ2W.FZFOcy2.hCxRO9VDamct.WmyzQWW/KyfDmK');
-
 CREATE TABLE IF NOT EXISTS `vouchers` (
                                           `id` char(10) NOT NULL COMMENT 'Voucher ID',
                                           `uses` tinyint(1) UNSIGNED DEFAULT 1 COMMENT 'Voucher uses left',

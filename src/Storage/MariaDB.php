@@ -10,7 +10,7 @@ use mysqli;
 
 class MariaDB implements iStorage
 {
-
+    private int $users = 0;
     private mysqli $mysql;
 
     /**
@@ -97,5 +97,17 @@ class MariaDB implements iStorage
         $result = $query->execute();
         $query->close();
         return $result;
+    }
+
+    public function userAmount(): int
+    {
+        if($this->users) return $this->users;
+        $query = $this->mysql->prepare('SELECT COUNT(*) FROM `users`');
+        $query->execute();
+        $fetch = $query->get_result();
+        $result = $fetch->fetch_assoc();
+        $this->users = $result['COUNT(*)'];
+        $query->close();
+        return $result['COUNT(*)'];
     }
 }

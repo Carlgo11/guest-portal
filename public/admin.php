@@ -6,8 +6,8 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-
-#[NoReturn] function send($message, $code = 200)
+$db = new MariaDB();
+function send($message, $code = 200)
 {
     http_response_code($code);
     die(json_encode($message));
@@ -19,12 +19,12 @@ function language(): array
     return json_decode(file_get_contents(__DIR__ . "/../language_${lang}.json"), true);
 }
 
-function authenticate()
+function authenticate($db)
 {
     $user = $_SERVER['PHP_AUTH_USER'];
     if (isset($user)) {
         if (session_status() === PHP_SESSION_ACTIVE && $_SESSION['user'] === $user) return true;
-        if ($hash = (new MariaDB())->getUser($user))
+        if ($hash = $db->getUser($user))
             if (password_verify($_SERVER['PHP_AUTH_PW'], $hash)) {
                 session_start();
                 $_SESSION['user'] = $user;
@@ -36,7 +36,7 @@ function authenticate()
     die();
 }
 
-authenticate();
+if($db->userAmount()) authenticate($db);
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $loader = new FilesystemLoader([__DIR__ . '/../templates', __DIR__ . '/../templates/admin']);
@@ -49,6 +49,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         try {
             switch (filter_var($data['type'])) {
                 case 'voucher':
+                    if(!$db->userAmount()) throw new Exception("Unauthenticated", 401);
                     $gp = new GuestPortal();
                     $uses = filter_var($data['uses'], 257);
                     $expiry = new DateTime('@' . filter_var($data['expiry'], 257, FILTER_NULL_ON_FAILURE));
@@ -59,7 +60,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 case 'user':
                     $username = preg_replace('/\W/', '', $data['username']);
                     $hash = password_hash(filter_var($data['password'], 513), PASSWORD_BCRYPT);
-                    $result = (new MariaDB())->createUser($username, $hash);
+                    $result = $db->createUser($username, $hash);
                     if ($result) send(null, 201);
                     throw new Exception('Unable to create user');
             }
@@ -67,6 +68,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $msg = $e->getMessage();
             $code = $e->getCode() ?? 500;
             error_log("${code}: ${msg}");
-            send($msg, $code);
+            send(['error' => $msg], $code);
         }
 }

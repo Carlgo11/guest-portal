@@ -1,44 +1,47 @@
 <!-- Form view -->
-<form class="view" id="create-voucher">
-  <h1 class="noselect">Create voucher</h1>
+<div class="view">
+  <form id="create-voucher">
+    <h1 class="noselect">Create voucher</h1>
 
-  <div class="form-floating mb-3">
-    <input type="number" id="uses" class="form-control" placeholder="1" value="1" required>
-    <label for="uses" class="noselect">Uses</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    <input type="datetime-local" id="duration" class="form-control" placeholder="yyyy/mm/dd hh:mm"
-           pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
-    <label for="duration" class="noselect">Duration</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    <a class="" data-bs-toggle="collapse" href="#advanced" role="button" aria-expanded="false"
-       aria-controls="advanced" style="text-decoration: none;margin-bottom:1rem">
-      <div class="col-12" style="border-top:rgba(0, 0, 0, 0.18) 1px solid;">
-        <div class="text-center border-top-0 noselect" id="advanced-btn">
-          Advanced
-        </div>
-      </div>
-    </a>
-    <div class="collapse" id="advanced">
-
-      <div class="form-floating mb-3">
-        <input type="datetime-local" id="validity" class="form-control" placeholder="yyyy/mm/dd hh:mm"
-               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
-        <label for="validity" class="noselect">Voucher expiration</label>
-      </div>
-      <div class="input-group form-floating mb-3">
-        <input type="number" id="speed" class="form-control" min="0">
-        <label for="validity" class="noselect">Transfer limit</label>
-        <span class="input-group-text noselect" style="border-radius: 0">MiB/s</span>
-      </div>
-
+    <div class="form-floating mb-3">
+      <input type="number" id="uses" class="form-control" placeholder="1" value="1" required>
+      <label for="uses" class="noselect">Uses</label>
     </div>
-  </div>
 
-  <div class="justify-content-md-start">
-    <button type="submit" class="btn btn-lg btn-success col-5">Create Voucher</button>
-  </div>
-</form>
+    <div class="form-floating mb-3">
+      <input type="datetime-local" id="duration" class="form-control" placeholder="yyyy/mm/dd hh:mm"
+             pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
+      <label for="duration" class="noselect">Duration</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <a class="text-decoration-none mb-3" data-bs-toggle="collapse" href="#advanced" role="button"
+         aria-expanded="false"
+         aria-controls="advanced">
+        <div class="col-12" style="border-top:rgba(0, 0, 0, 0.18) 1px solid;">
+          <div class="text-center border-top-0 noselect" id="advanced-btn">
+            Advanced
+          </div>
+        </div>
+      </a>
+      <div class="collapse" id="advanced">
+
+        <div class="form-floating mb-3">
+          <input type="datetime-local" id="validity" class="form-control" placeholder="yyyy/mm/dd hh:mm"
+                 pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
+          <label for="validity" class="noselect">Voucher expiration</label>
+        </div>
+        <div class="input-group form-floating mb-3">
+          <input type="number" id="speed" class="form-control" min="0">
+          <label for="validity" class="noselect">Transfer limit</label>
+          <span class="input-group-text noselect rounded-0">MiB/s</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="justify-content-md-start">
+      <button type="submit" class="btn btn-lg btn-success col-5">Create Voucher</button>
+    </div>
+  </form>
+</div>
