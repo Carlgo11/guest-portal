@@ -2,7 +2,6 @@
 
 namespace Carlgo11\Guest_Portal\Storage;
 
-use Carlgo11\Guest_Portal\User;
 use Carlgo11\Guest_Portal\Voucher;
 use DateTime;
 use Exception;
@@ -37,7 +36,7 @@ class MariaDB implements iStorage
         $fetch = $query->get_result();
         $result = $fetch->fetch_assoc();
         if ($result == NULL || sizeof($result) !== 4) throw new Exception('Code not found', 404);
-        require_once __DIR__ . '/Voucher.php';
+        require_once __DIR__ . '/../Voucher.php';
         $expiry = new DateTime();
         $expiry->setTimestamp($result['expiry']);
         $duration = new DateTime();
@@ -79,7 +78,7 @@ class MariaDB implements iStorage
         return $result;
     }
 
-    public function getUser(string $username): string
+    public function getPassword(string $username): string
     {
         $query = $this->mysql->prepare('SELECT `password` FROM `users` WHERE `username` = ?');
         $query->bind_param('s', $username);
@@ -101,7 +100,7 @@ class MariaDB implements iStorage
 
     public function userAmount(): int
     {
-        if($this->users) return $this->users;
+        if ($this->users) return $this->users;
         $query = $this->mysql->prepare('SELECT COUNT(*) FROM `users`');
         $query->execute();
         $fetch = $query->get_result();

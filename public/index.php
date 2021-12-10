@@ -22,9 +22,9 @@ function language(): array
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $loader = new FilesystemLoader([__DIR__ . '/../templates', __DIR__ . '/../templates/auth']);
+        $loader = new FilesystemLoader([__DIR__ . '/../templates', __DIR__ . '/../templates/index']);
         $twig = new Environment($loader);
-        echo $twig->render('auth.twig', ['lang' => language()]);
+        echo $twig->render('index.twig', ['lang' => language()]);
         break;
 
     case 'POST':

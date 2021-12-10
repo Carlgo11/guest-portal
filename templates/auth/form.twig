@@ -1,0 +1,16 @@
+<div class="view">
+  <h1>{% if first_login %}{{ lang.admin_register }}{% else %}{{ lang.admin_login }}{% endif %}</h1>
+  <form id="login">
+    <div class="row g-2">
+      <div class="form-floating mb-3 col-md">
+        <input class="form-control" type="text" aria-label="username" id="username" placeholder="{{ lang.username }}">
+        <label for="username">{{ lang.username }}</label>
+      </div>
+      <div class="form-floating mb-3 col-md">
+        <input class="form-control" type="password" aria-label="password" id="password" placeholder="{{ lang.password }}">
+        <label for="password">{{ lang.password }}</label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-lg btn-success right-0">{{ lang.continue }} <i class="bi bi-chevron-right"></i></button>
+  </form>
+</div>

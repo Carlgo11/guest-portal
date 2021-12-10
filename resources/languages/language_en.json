@@ -7,5 +7,10 @@
   "back": "Back",
   "default_ssid": "Guest Wi-Fi",
   "enter_login_code": "Enter your login code",
-  "or": "or"
+  "or": "or",
+  "admin_login": "Administrator Login",
+  "admin_register": "Register Admin Account",
+  "username": "Username",
+  "password": "Password",
+  "continue": "Continue"
 }

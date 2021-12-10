@@ -7,5 +7,10 @@
   "back": "Tillbaka",
   "default_ssid": "Gäst Wi-Fi",
   "enter_login_code": "Ange din inloggningskod",
-  "or": "eller"
+  "or": "eller",
+  "admin_login": "Administratörsinloggning",
+  "admin_register": "Registrera Admin-konto",
+  "username": "Användarnamn",
+  "password": "Lösenord",
+  "continue": "Fortsätt"
 }

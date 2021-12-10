@@ -19,24 +19,12 @@ function language(): array
     return json_decode(file_get_contents(__DIR__ . "/../language_${lang}.json"), true);
 }
 
-function authenticate($db)
-{
-    $user = $_SERVER['PHP_AUTH_USER'];
-    if (isset($user)) {
-        if (session_status() === PHP_SESSION_ACTIVE && $_SESSION['user'] === $user) return true;
-        if ($hash = $db->getUser($user))
-            if (password_verify($_SERVER['PHP_AUTH_PW'], $hash)) {
-                session_start();
-                $_SESSION['user'] = $user;
-                return true;
-            }
-    }
-    header('HTTP/1.0 401 Unauthorized');
-    header('WWW-Authenticate: Basic realm="guest-portal"');
+session_start();
+if (is_null($_SESSION['user'])) {
+    header("Location: /auth?url=${_SERVER['REQUEST_URI']}");
     die();
 }
 
-if($db->userAmount()) authenticate($db);
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $loader = new FilesystemLoader([__DIR__ . '/../templates', __DIR__ . '/../templates/admin']);
@@ -49,7 +37,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         try {
             switch (filter_var($data['type'])) {
                 case 'voucher':
-                    if(!$db->userAmount()) throw new Exception("Unauthenticated", 401);
                     $gp = new GuestPortal();
                     $uses = filter_var($data['uses'], 257);
                     $expiry = new DateTime('@' . filter_var($data['expiry'], 257, FILTER_NULL_ON_FAILURE));

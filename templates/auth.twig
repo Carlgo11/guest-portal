@@ -1,13 +1,13 @@
 {% extends 'default.twig' %}
 
+{% block stylesheets %}
+{% endblock %}
+
 {% block content %}
   {% include 'form.twig' %}
-  {% include 'loading.twig' %}
-  {% include 'approval.twig' %}
   {% include 'error.twig' %}
-  {% include 'success.twig' %}
 {% endblock %}
 
 {% block javascript %}
-<script src="/js/index.js"></script>
+<script src="/js/auth.js"></script>
 {% endblock %}
