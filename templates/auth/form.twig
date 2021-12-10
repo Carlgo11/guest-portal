@@ -3,7 +3,7 @@
   <form method="POST" action="">
     <h1 class="title noselect">{{ lang.default_ssid }}</h1>
     <div class="input-group" style="margin: 0 1vw;width: unset;">
-      <input class="form-control" type="text" placeholder="{{ lang.enter_login_code }}" pattern="^\d{5}(?:-)?\d{5}$" autocomplete="off" autofocus="" autocapitalize="off" inputmode="numeric" required="" id="otp" maxlength="11" minlength="10" name="code">
+      <input class="form-control" type="text" placeholder="{{ lang.enter_login_code }}" pattern="^\d{5}(?:-)?\d{5}$" autocomplete="off" autofocus autocapitalize="off" inputmode="numeric" required id="otp" maxlength="11" minlength="10" name="code">
       <span class="input-group-btn">
                 <button type="submit" class="btn btn-success ">{{ lang.connect_button }} <i class="bi bi-chevron-right"></i></button>
       </span>
