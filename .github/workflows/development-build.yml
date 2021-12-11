@@ -1,9 +1,9 @@
-name: Publish Images
+name: Publish Development Images
 
-on: [push]
+on: [ push ]
 
 jobs:
-  github_registry:
+  docker:
     name: Publish to GitHub Cointainer Registry
     runs-on: ubuntu-latest
     steps:
@@ -32,8 +32,8 @@ jobs:
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           tags: |
-            carlgo11/guest-portal:frontend
-            ghcr.io/carlgo11/guest-portal:frontend
+            carlgo11/guest-portal:frontend-dev
+            ghcr.io/carlgo11/guest-portal:frontend-dev
       - name: Build and Push Backend
         uses: docker/build-push-action@v2
         with:
@@ -42,5 +42,5 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           tags: |
-            carlgo11/guest-portal:backend
-            ghcr.io/carlgo11/guest-portal:backend
+            carlgo11/guest-portal:backend-dev
+            ghcr.io/carlgo11/guest-portal:backend-dev
