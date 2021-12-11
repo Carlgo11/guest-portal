@@ -22,6 +22,8 @@ jobs:
             type=semver,pattern={{version}},prefix=backend-
             type=semver,pattern={{major}}.{{minor}},prefix=backend-
             type=semver,pattern={{major}},prefix=backend-
+          flavor: |
+            latest=false
 
       - name: Docker Frontend metadata
         id: frontend-meta
@@ -35,6 +37,8 @@ jobs:
             type=semver,pattern={{version}},prefix=frontend-
             type=semver,pattern={{major}}.{{minor}},prefix=frontend-
             type=semver,pattern={{major}},prefix=frontend-
+          flavor: |
+            latest=false
 
       - uses: docker/setup-qemu-action@v1
 
