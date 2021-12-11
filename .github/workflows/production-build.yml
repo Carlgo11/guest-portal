@@ -18,6 +18,7 @@ jobs:
             ${{ GITHUB.REPOSITORY }}
             ghcr.io/${{ GITHUB.REPOSITORY }}
           tags: |
+            type=raw,value=backend
             type=semver,pattern={{version}},prefix=backend
             type=semver,pattern={{major}}.{{minor}},prefix=backend
             type=semver,pattern={{major}},prefix=backend
@@ -30,6 +31,7 @@ jobs:
             ${{ GITHUB.REPOSITORY }}
             ghcr.io/${{ GITHUB.REPOSITORY }}
           tags: |
+            type=raw,value=frontend
             type=semver,pattern={{version}},prefix=frontend
             type=semver,pattern={{major}}.{{minor}},prefix=frontend
             type=semver,pattern={{major}},prefix=frontend
