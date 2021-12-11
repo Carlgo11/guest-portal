@@ -19,9 +19,9 @@ jobs:
             ghcr.io/${{ GITHUB.REPOSITORY }}
           tags: |
             type=raw,value=backend
-            type=semver,pattern={{version}},prefix=backend
-            type=semver,pattern={{major}}.{{minor}},prefix=backend
-            type=semver,pattern={{major}},prefix=backend
+            type=semver,pattern={{version}},prefix=backend-
+            type=semver,pattern={{major}}.{{minor}},prefix=backend-
+            type=semver,pattern={{major}},prefix=backend-
 
       - name: Docker Frontend metadata
         id: frontend-meta
@@ -32,9 +32,9 @@ jobs:
             ghcr.io/${{ GITHUB.REPOSITORY }}
           tags: |
             type=raw,value=frontend
-            type=semver,pattern={{version}},prefix=frontend
-            type=semver,pattern={{major}}.{{minor}},prefix=frontend
-            type=semver,pattern={{major}},prefix=frontend
+            type=semver,pattern={{version}},prefix=frontend-
+            type=semver,pattern={{major}}.{{minor}},prefix=frontend-
+            type=semver,pattern={{major}},prefix=frontend-
 
       - uses: docker/setup-qemu-action@v1
 
