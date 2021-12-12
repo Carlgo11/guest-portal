@@ -6,5 +6,4 @@ COPY --chown=nginx:nginx ./resources/convert.sh /guest-portal/convert.sh
 EXPOSE 8080
 USER nginx
 WORKDIR /guest-portal
-ENTRYPOINT
 CMD ./convert.sh & nginx
