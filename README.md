@@ -2,8 +2,8 @@
 
 [![CC-BY-4.0](https://img.shields.io/github/license/carlgo11/guest-portal?style=for-the-badge)](LICENSE)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Carlgo11/guest-portal/Docker%20Image%20CI?style=for-the-badge)](https://github.com/Carlgo11/guest-portal/actions)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/carlgo11/guest-portal?logo=github&style=for-the-badge)](https://github.com/Carlgo11/guest-portal/releases/latest)
-[![Docker](https://img.shields.io/badge/Docker-Download-2496ed?style=for-the-badge&logo=docker&logoColor=fff)](https://hub.docker.com/r/carlgo11/guest-portal/)
+[![GitHub Packages](https://img.shields.io/github/v/release/carlgo11/guest-portal?logo=github&style=for-the-badge)](https://github.com/Carlgo11/guest-portal/pkgs/container/guest-portal)
+[![Docker Hub ](https://img.shields.io/github/v/release/carlgo11/guest-portal?logo=docker&logoColor=fff&style=for-the-badge)](https://hub.docker.com/r/carlgo11/guest-portal/tags)
 
 ## Usage
 
@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
     user: nginx
     volumes:
-      - "./resources/images/:/guest-portal/public/img/bg/"
+      - "./bg.jpg:/guest-portal/public/img/bg/bg.jpg:ro"
     read_only: true
     tmpfs:
       - /tmp
@@ -38,11 +38,11 @@ services:
       - "8080:8080"
 
   database:
-    image: linuxserver/mariadb:alpine
+    image: linuxserver/mariadb
     restart: unless-stopped
     volumes:
       - "mysql:/var/lib/mysql"
-      - "./resources/db-template.sql:/config/initdb.d/db.sql:ro"
+      - "./db-template.sql:/config/initdb.d/db.sql:ro"
     environment:
       MYSQL_ROOT_PASSWORD: password
     env_file:
@@ -52,21 +52,28 @@ volumes:
   mysql:
 ```
 
+### Background images
+
+The site fetches `bg.jpg` from `/guest-portal/public/img/bg/` in the Docker container and converts it into JPEG, AV1 and WebP images in different resolutions.
+
+Link to an appropriate image (preferably larger than 1920x1080) as `bg.jpg` before starting the `frontend` container.
+In the example `docker-compose.yml` above, `bg.jpg` is placed in the same directory as the Docker compose file.
+
 ### Environment variables
 
-|Name|Default|Description|Example|
-|----|-------|-----------|-------|
-|MYSQL_HOST| |MySQL server url|database.docker/127.0.0.1
-|MYSQL_PORT| |MySQL server port|3306
-|MYSQL_USER| |MySQL username|guest-portal
-|MYSQL_PASSWORD| |MySQL password|password
-|MYSQL_DATABASE| |MySQL database name|guest-portal
-|UNIFI_USER| |UniFi Hotspot username|guest-portal
-|UNIFI_PASSWORD| |UniFi Hotspot password|password
-|UNIFI_URL| |UniFi Controller IP/URL & port|<https://192.168.1.2:8443>
-|UNIFI_SITE|default|UniFi Site|default
-|UNIFI_VERSION| |Controller version|5.13.32
-|LANG|en|Language pack to use|en
+| Name           | Default | Description                    |          Example           |
+|:---------------|:-------:|:-------------------------------|:--------------------------:|
+| MYSQL_HOST     |         | MySQL server url               | database.docker/127.0.0.1  |
+| MYSQL_PORT     |  3306   | MySQL server port              |            3306            |
+| MYSQL_USER     |         | MySQL username                 |        guest-portal        |
+| MYSQL_PASSWORD |         | MySQL password                 |          password          |
+| MYSQL_DATABASE |         | MySQL database name            |        guest-portal        |
+| UNIFI_USER     |         | UniFi Hotspot username         |        guest-portal        |
+| UNIFI_PASSWORD |         | UniFi Hotspot password         |          password          |
+| UNIFI_URL      |         | UniFi Controller IP/URL & port | <https://192.168.1.2:8443> |
+| UNIFI_SITE     | default | UniFi Site                     |          default           |
+| UNIFI_VERSION  |  6.0.0  | Controller version             |           6.0.44           |
+| LANG           |   en    | Language pack to use           |             en             |
 
 ## Example portal showcase
 
