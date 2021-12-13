@@ -1,6 +1,6 @@
 <?php
 
-use Carlgo11\Guest_Portal\Storage\MariaDB;
+use Carlgo11\Guest_Portal\Storage\Storage;
 use JetBrains\PhpStorm\NoReturn;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -28,7 +28,7 @@ function language(): array
     send(null, 204);
 }
 
-$db = new MariaDB();
+$db = new Storage();
 $first_login = !$db->userAmount();
 
 switch ($_SERVER['REQUEST_METHOD']) {

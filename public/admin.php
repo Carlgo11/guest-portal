@@ -1,12 +1,13 @@
 <?php
 
 use Carlgo11\Guest_Portal\GuestPortal;
-use Carlgo11\Guest_Portal\Storage\MariaDB;
+use Carlgo11\Guest_Portal\Storage\Storage;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-$db = new MariaDB();
+$db = new Storage();
+
 function send($message, $code = 200)
 {
     http_response_code($code);

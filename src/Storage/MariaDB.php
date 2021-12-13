@@ -13,7 +13,9 @@ class MariaDB implements iStorage
     private mysqli $mysql;
 
     /**
-     * @throws Exception
+     * Initiate database connection.
+     *
+     * @throws Exception Throws exception if unable to connect to database.
      */
     public function __construct()
     {
@@ -23,11 +25,21 @@ class MariaDB implements iStorage
             throw new Exception("Could not connect to database.");
     }
 
+    /**
+     * Close database connection.
+     */
     public function __destruct()
     {
         $this->mysql->close();
     }
 
+    /**
+     * Fetch voucher data from storage.
+     *
+     * @param int $code voucher code.
+     * @return Voucher Voucher data as {@link Voucher} class
+     * @throws Exception
+     */
     public function fetchVoucher(int $code): Voucher
     {
         $query = $this->mysql->prepare('SELECT `duration`, `uses`, `expiry`, `speed_limit`  FROM `vouchers` WHERE `id` = ?');
@@ -44,6 +56,12 @@ class MariaDB implements iStorage
         return new Voucher($code, $duration, $result['uses'], $expiry, $result['speed_limit']);
     }
 
+    /**
+     * Upload a {@link Voucher} to storage.
+     *
+     * @param Voucher $voucher Voucher to upload to storage.
+     * @return bool Returns {@link TRUE} if successful, otherwise {@link FALSE}.
+     */
     public function uploadVoucher(Voucher $voucher): bool
     {
         $id = $voucher->id;
@@ -58,6 +76,13 @@ class MariaDB implements iStorage
         return $result;
     }
 
+    /**
+     * Remove a {@link Voucher} from storage.
+     * Should be called after a voucher is used or expired.
+     *
+     * @param Voucher $voucher Voucher to delete from storage.
+     * @return bool Returns {@link TRUE} if successful, otherwise {@link FALSE}.
+     */
     public function removeVoucher(Voucher $voucher): bool
     {
         $code = $voucher->id;
@@ -68,6 +93,11 @@ class MariaDB implements iStorage
         return $result;
     }
 
+    /**
+     * @param Voucher $voucher Voucher to update.
+     * @param int $newUses New amount of uses left on the voucher.
+     * @return bool Returns {@link TRUE} if successful, otherwise {@link FALSE}.
+     */
     public function updateUses(Voucher $voucher, int $newUses): bool
     {
         $code = $voucher->id;
@@ -78,17 +108,30 @@ class MariaDB implements iStorage
         return $result;
     }
 
-    public function getPassword(string $username): string
+    /**
+     * Get password hash for a user.
+     *
+     * @param string $username
+     * @return string|null Returns password hash as {@link PASSWORD_BCRYPT} if user is found, otherwise {@link NULL}.
+     */
+    public function getPassword(string $username): ?string
     {
         $query = $this->mysql->prepare('SELECT `password` FROM `users` WHERE `username` = ?');
         $query->bind_param('s', $username);
         $query->execute();
         $fetch = $query->get_result();
         $result = $fetch->fetch_assoc();
-        if (is_null($result)) return false;
+        if (is_null($result)) return null;
         return $result['password'];
     }
 
+    /**
+     * Create a new user.
+     *
+     * @param string $username name of the user. Between 1-16 chars.
+     * @param string $hash {@link PASSWORD_BCRYPT} hash of the user's password.
+     * @return bool Returns {@link TRUE} if successful, otherwise {@link FALSE}.
+     */
     public function createUser(string $username, string $hash): bool
     {
         $query = $this->mysql->prepare('INSERT INTO `users` (`username`, `password`) VALUES (?,?)');
@@ -98,6 +141,11 @@ class MariaDB implements iStorage
         return $result;
     }
 
+    /**
+     * Get amount of users as an integer.
+     *
+     * @return int Returns positive integer representing the amount of stored users.
+     */
     public function userAmount(): int
     {
         if ($this->users) return $this->users;
