@@ -54,26 +54,28 @@ volumes:
 
 ### Background images
 
-The site fetches `bg.jpg` from `/guest-portal/public/img/bg/` in the Docker container and converts it into JPEG, AV1 and WebP images in different resolutions.
+The site fetches `bg.jpg` from `/guest-portal/public/img/bg/` in the Docker container and converts it into JPEG, AV1 and
+WebP images in different resolutions.
 
-Link to an appropriate image (preferably larger than 1920x1080) as `bg.jpg` before starting the `frontend` container.
-In the example `docker-compose.yml` above, `bg.jpg` is placed in the same directory as the Docker compose file.
+Link to an appropriate image (preferably larger than 1920x1080) as `bg.jpg` before starting the `frontend` container. In
+the example `docker-compose.yml` above, `bg.jpg` is placed in the same directory as the Docker compose file.
 
 ### Environment variables
 
-| Name           | Default | Description                    |          Example           |
-|:---------------|:-------:|:-------------------------------|:--------------------------:|
-| MYSQL_HOST     |         | MySQL server url               | database.docker/127.0.0.1  |
-| MYSQL_PORT     |  3306   | MySQL server port              |            3306            |
-| MYSQL_USER     |         | MySQL username                 |        guest-portal        |
-| MYSQL_PASSWORD |         | MySQL password                 |          password          |
-| MYSQL_DATABASE |         | MySQL database name            |        guest-portal        |
-| UNIFI_USER     |         | UniFi Hotspot username         |        guest-portal        |
-| UNIFI_PASSWORD |         | UniFi Hotspot password         |          password          |
-| UNIFI_URL      |         | UniFi Controller IP/URL & port | <https://192.168.1.2:8443> |
-| UNIFI_SITE     | default | UniFi Site                     |          default           |
-| UNIFI_VERSION  |  6.0.0  | Controller version             |           6.0.44           |
-| LANG           |   en    | Language pack to use           |             en             |
+| Name           | Default  | Description                    |          Example           |
+|:---------------|:--------:|:-------------------------------|:--------------------------:|
+| MYSQL_HOST     | database | MySQL server url               |     database/127.0.0.1     |
+| MYSQL_PORT     |   3306   | MySQL server port              |            3306            |
+| MYSQL_USER     |          | MySQL username                 |        guest-portal        |
+| MYSQL_PASSWORD |          | MySQL password                 |          password          |
+| MYSQL_DATABASE |          | MySQL database name            |        guest-portal        |
+| UNIFI_USER     |          | UniFi Hotspot username         |        guest-portal        |
+| UNIFI_PASSWORD |          | UniFi Hotspot password         |          password          |
+| UNIFI_URL      |          | UniFi Controller IP/URL & port | <https://192.168.1.2:8443> |
+| UNIFI_SITE     | default  | UniFi Site                     |          default           |
+| UNIFI_VERSION  |  6.0.0   | Controller version             |           6.0.44           |
+| LANG           |    en    | Language pack to use           |             en             |
+| DATABASE       |          | Storage method. (MySQL/Redis)  |           mysql            |
 
 ## Example portal showcase
 
