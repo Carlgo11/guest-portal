@@ -20,16 +20,18 @@ services:
     restart: unless-stopped
     volumes:
       - "./resources/nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "./resources/images/:/guest-portal/public/img/bg/:ro"
+      - "./bg.jpg:/guest-portal/public/img/bg/bg.jpg:ro"
     read_only: true
     tmpfs:
       - /tmp
+      - /guest-portal/public/img/bg/
     ports:
       - "8080:8080"
+    env_file:
+      - unifi.env
 
   database:
-    image: linuxserver/mariadb:alpine
-    restart: unless-stopped
+    image: linuxserver/mariadb
     volumes:
       - "mysql:/var/lib/mysql"
       - "./resources/db-template.sql:/config/initdb.d/db.sql:ro"
