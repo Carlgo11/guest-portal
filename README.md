@@ -34,10 +34,13 @@ services:
     read_only: true
     tmpfs:
       - /tmp
+      - /guest-portal/public/img/bg/
     ports:
       - "8080:8080"
+    env_file:
+      - unifi.env
 
-  database:
+  mysql:
     image: linuxserver/mariadb
     restart: unless-stopped
     volumes:
@@ -62,20 +65,20 @@ the example `docker-compose.yml` above, `bg.jpg` is placed in the same directory
 
 ### Environment variables
 
-| Name           | Default  | Description                    |          Example           |
-|:---------------|:--------:|:-------------------------------|:--------------------------:|
-| MYSQL_HOST     | database | MySQL server url               |     database/127.0.0.1     |
-| MYSQL_PORT     |   3306   | MySQL server port              |            3306            |
-| MYSQL_USER     |          | MySQL username                 |        guest-portal        |
-| MYSQL_PASSWORD |          | MySQL password                 |          password          |
-| MYSQL_DATABASE |          | MySQL database name            |        guest-portal        |
-| UNIFI_USER     |          | UniFi Hotspot username         |        guest-portal        |
-| UNIFI_PASSWORD |          | UniFi Hotspot password         |          password          |
-| UNIFI_URL      |          | UniFi Controller IP/URL & port | <https://192.168.1.2:8443> |
-| UNIFI_SITE     | default  | UniFi Site                     |          default           |
-| UNIFI_VERSION  |  6.0.0   | Controller version             |           6.0.44           |
-| LANG           |    en    | Language pack to use           |             en             |
-| DATABASE       |          | Storage method. (MySQL/Redis)  |           mysql            |
+| Name           | Default | Description                    |        Example        | Used By           |
+|:---------------|:-------:|:-------------------------------|:---------------------:|:------------------|
+| MYSQL_HOST     |  mysql  | MySQL server hostname/IP       |    mysql/127.0.0.1    | Backend, MySQL    |
+| MYSQL_PORT     |  3306   | MySQL server port              |         3306          | Backend, MySQL    |
+| MYSQL_USER     |         | MySQL username                 |     guest-portal      | Backend, MySQL    |
+| MYSQL_PASSWORD |         | MySQL password                 |       password        | Backend, MySQL    |
+| MYSQL_DATABASE |         | MySQL database name            |     guest-portal      | Backend, MySQL    |
+| UNIFI_USER     |         | UniFi Hotspot username         |     guest-portal      | Backend           |
+| UNIFI_PASSWORD |         | UniFi Hotspot password         |       password        | Backend           |
+| UNIFI_URL      |         | UniFi Controller IP/URL & port | <https://192.168.1.2> | Backend           |
+| UNIFI_SITE     | default | UniFi Site                     |        default        | Backend, Frontend |
+| UNIFI_VERSION  |  6.0.0  | Controller version             |        6.0.44         | Backend           |
+| LANG           |   en    | Language pack to use           |          en           | Backend           |
+| DATABASE       |  mysql  | Storage method. (MySQL/Redis)  |         mysql         | Backend           |
 
 ## Example portal showcase
 
