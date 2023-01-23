@@ -18,10 +18,25 @@
 
 <body>
 <picture>
-  {% set q = "now"|date("m") / 3 %}
-  <source srcset="/img/bg/{{ q | round }}/bg-sm.avif 576w, /img/bg/{{ q | round }}/bg-md.avif 768w, /img/bg/{{ q | round }}/bg-lg.avif 1920w, /img/bg/{{ q | round }}/bg.avif" type="image/avif">
-  <source srcset="/img/bg/{{ q | round }}/bg-sm.webp 576w, /img/bg/{{ q | round }}/bg-md.webp 768w, /img/bg/{{ q | round }}/bg-lg.webp 1920w, /img/bg/{{ q | round }}/bg.webp" type="image/webp">
-  <img srcset="/img/bg/{{ q | round }}/bg-sm.jpg 576w, /img/bg/{{ q | round }}/bg-md.jpg 768w, /img/bg/{{ q | round }}/bg-lg.jpg 1920w, /img/bg/{{ q | round }}/bg.jpg" type="image/jpeg" draggable="false" onmousedown="return false" class="background d-print-none noselect">
+  {% set season = '' %}
+  {% set today = 'NOW'|date('U') %}
+  {% set spring = 'March 20'|date('U') %}
+  {% set summer = 'June 20'|date('U') %}
+  {% set fall = 'September 22'|date('U') %}
+  {% set winter = 'December 21'|date('U') %}
+
+  {% if today >= spring and today < summer %}
+    {% set season = 'spring' %}
+  {% elseif today >= summer and today < fall %}
+    {% set season = 'summer' %}
+  {% elseif today >= fall and today < winter %}
+    {% set season = 'fall' %}
+  {% else %}
+    {% set season = 'winter' %}
+  {% endif %}
+  <source srcset="/img/bg/{{ season }}/bg-sm.avif 576w, /img/bg/{{ season }}/bg-md.avif 768w, /img/bg/{{ season }}/bg-lg.avif 1920w, /img/bg/{{ season }}/bg.avif" type="image/avif">
+  <source srcset="/img/bg/{{ season }}/bg-sm.webp 576w, /img/bg/{{ season }}/bg-md.webp 768w, /img/bg/{{ season }}/bg-lg.webp 1920w, /img/bg/{{ season }}/bg.webp" type="image/webp">
+  <img srcset="/img/bg/{{ season }}/bg-sm.jpg 576w, /img/bg/{{ season }}/bg-md.jpg 768w, /img/bg/{{ season }}/bg-lg.jpg 1920w, /img/bg/{{ season }}/bg.jpg" type="image/jpeg" draggable="false" onmousedown="return false" class="background d-print-none noselect">
 </picture>
 
 <div class="container px-4">
