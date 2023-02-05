@@ -5,9 +5,25 @@
 [![GitHub Packages](https://img.shields.io/github/v/release/carlgo11/guest-portal?logo=github&style=for-the-badge)](https://github.com/Carlgo11/guest-portal/pkgs/container/guest-portal)
 [![Docker Hub ](https://img.shields.io/github/v/release/carlgo11/guest-portal?logo=docker&logoColor=fff&style=for-the-badge)](https://hub.docker.com/r/carlgo11/guest-portal/tags)
 
-## Usage
+External UniFi Guest Portal using PHP & MariaDB, packaged to be run through Docker.
+
+## Installation
+
+### Requirements
+
+To run a guest portal you'll need:
+
+1. A UniFi controller
+2. A server reachable by the guest network.
+3. Docker & Docker-Compose
 
 ### Docker Compose
+
+The project is split into three different services:
+
+* The frontend, responsible for the static website content.
+* The backend, responsible for dynamic website content.
+* The database, storing vouchers and admin credentials.
 
 Here's a template docker-compose.yml file:
 
@@ -30,7 +46,10 @@ services:
     restart: unless-stopped
     user: nginx
     volumes:
-      - "./bg.jpg:/guest-portal/public/img/bg/bg.jpg:ro"
+      - "./bg.jpg:/guest-portal/public/img/bg/q1/bg.jpg:ro"
+      - "./bg.jpg:/guest-portal/public/img/bg/q2/bg.jpg:ro"
+      - "./bg.jpg:/guest-portal/public/img/bg/q3/bg.jpg:ro"
+      - "./bg.jpg:/guest-portal/public/img/bg/q4/bg.jpg:ro"
     read_only: true
     tmpfs:
       - /tmp
@@ -57,7 +76,12 @@ volumes:
 
 ### Background images
 
-The site fetches `bg.jpg` from `/guest-portal/public/img/bg/` in the Docker container and converts it into JPEG, AV1 and
+The frontend service requires background images to be present.
+In `/guest-portal/public/img/bg/` there should be a directory for each quarter of the year. `q1`,`q2`,`q3`,`q4`.
+These directories are used to host background images.
+
+The site fetches `bg.jpg` from `/guest-portal/public/img/bg/q{1,2,3,4}` in the Docker container and converts it into
+JPEG, AV1 and
 WebP images in different resolutions.
 
 Link to an appropriate image (preferably larger than 1920x1080) as `bg.jpg` before starting the `frontend` container. In
@@ -79,6 +103,29 @@ the example `docker-compose.yml` above, `bg.jpg` is placed in the same directory
 | UNIFI_VERSION  |  6.0.0  | Controller version             |        6.0.44         | Backend           |
 | LANG           |   en    | Language pack to use           |          en           | Backend           |
 | DATABASE       |  mysql  | Storage method. (MySQL/Redis)  |         mysql         | Backend           |
+
+## Usage
+
+### Voucher
+
+1. **Admin**
+    1. Go to `http(s)://(guest portal url)/admin` and enter your credentials.
+    2. Create new voucher.
+2. **User**
+    1. Select the guest Wi-Fi.
+    2. Wait for the guest portal to show up-
+    3. Enter the voucher.
+
+### Manual Approval
+
+1. **User**
+    1. Select the guest Wi-Fi.
+    2. Click "Manual approval".
+    3. Wait for admin to authorize the device.
+2. **Admin**
+    1. Open the UniFi Network portal via web or the app.
+    2. Find the user's device.
+    3. Click on 'Authorize'.
 
 ## Example portal showcase
 
