@@ -5,3 +5,4 @@ COPY --chown=nginx:nginx ./resources/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8080
 USER nginx
 WORKDIR /guest-portal
+CMD nginx
