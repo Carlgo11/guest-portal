@@ -12,6 +12,9 @@ services:
     env_file:
       - mysql.env
       - unifi.env
+    networks:
+      - php
+      - mysql
 
   frontend:
     build:
@@ -20,25 +23,29 @@ services:
     restart: unless-stopped
     volumes:
       - "./resources/nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "./bg.jpg:/guest-portal/public/img/bg/bg.jpg:ro"
+      - "./resources/images/:/guest-portal/public/img/bg/:ro"
     read_only: true
     tmpfs:
       - /tmp
-      - /guest-portal/public/img/bg/
     ports:
       - "8080:8080"
-    env_file:
-      - unifi.env
+    networks:
+      - php
+    environment:
+      UNIFI_SITE: "default"
 
   database:
-    image: linuxserver/mariadb
+    image: linuxserver/mariadb:latest
     volumes:
       - "mysql:/var/lib/mysql"
-      - "./resources/db-template.sql:/config/initdb.d/db.sql:ro"
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+      - "./resources/db-template.sql:/config/initdb.d/db.sql"
     env_file:
       - mysql.env
+    networks:
+      - mysql
 
+networks:
+  mysql:
+  php:
 volumes:
   mysql:

@@ -8,8 +8,11 @@ use Exception;
 
 class GuestPortal
 {
-    public function __construct()
+    private string $site;
+
+    public function __construct(string $site = 'default')
     {
+        $this->site = $site;
         require_once __DIR__ . '/../vendor/autoload.php';
     }
 
@@ -25,7 +28,7 @@ class GuestPortal
     public function useVoucher(Voucher $voucher, string $mac, string $ap = NULL): bool
     {
         require_once __DIR__ . '/UniFi.php';
-        $uniFi = new UniFi();
+        $uniFi = new UniFi($this->site);
         if (!$uniFi->isOnline($mac)) throw new Exception('Client not connected to WLAN', 412);
         if ($uniFi->authorizeGuest($mac, $voucher, $ap)) {
             $db = new Storage();

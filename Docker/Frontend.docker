@@ -6,4 +6,4 @@ COPY --chown=nginx:nginx ./resources/convert.sh /guest-portal/convert.sh
 EXPOSE 8080
 USER nginx
 WORKDIR /guest-portal
-CMD ./convert.sh & echo -e "rewrite ^/guest/s/${UNIFI_SITE} /;" > /tmp/redirect.nginx; chmod 400 /tmp/redirect.nginx; nginx
+CMD echo -e "rewrite ^/guest/s/${UNIFI_SITE} /;" > /tmp/redirect.nginx; chmod 400 /tmp/redirect.nginx; nginx

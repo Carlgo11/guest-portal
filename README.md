@@ -99,7 +99,6 @@ the example `docker-compose.yml` above, `bg.jpg` is placed in the same directory
 | UNIFI_USER     |         | UniFi Hotspot username         |     guest-portal      | Backend           |
 | UNIFI_PASSWORD |         | UniFi Hotspot password         |       password        | Backend           |
 | UNIFI_URL      |         | UniFi Controller IP/URL & port | <https://192.168.1.2> | Backend           |
-| UNIFI_SITE     | default | UniFi Site                     |        default        | Backend, Frontend |
 | UNIFI_VERSION  |  6.0.0  | Controller version             |        6.0.44         | Backend           |
 | LANG           |   en    | Language pack to use           |          en           | Backend           |
 | DATABASE       |  mysql  | Storage method. (MySQL/Redis)  |         mysql         | Backend           |
