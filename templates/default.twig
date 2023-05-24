@@ -18,21 +18,23 @@
 
 <body>
 <picture>
-  {% set season = '' %}
-  {% set today = 'NOW'|date('U') %}
-  {% set spring = 'March 20'|date('U') %}
-  {% set summer = 'June 20'|date('U') %}
-  {% set fall = 'September 22'|date('U') %}
-  {% set winter = 'December 21'|date('U') %}
+  {% set season = '.' %}
+  {% if background %}
+    {% set today = 'NOW'|date('U') %}
+    {% set spring = 'March 20'|date('U') %}
+    {% set summer = 'June 20'|date('U') %}
+    {% set fall = 'September 22'|date('U') %}
+    {% set winter = 'December 21'|date('U') %}
 
-  {% if today >= spring and today < summer %}
-    {% set season = 'spring' %}
-  {% elseif today >= summer and today < fall %}
-    {% set season = 'summer' %}
-  {% elseif today >= fall and today < winter %}
-    {% set season = 'fall' %}
-  {% else %}
-    {% set season = 'winter' %}
+    {% if today >= spring and today < summer %}
+      {% set season = 'q1' %}
+    {% elseif today >= summer and today < fall %}
+      {% set season = 'q2' %}
+    {% elseif today >= fall and today < winter %}
+      {% set season = 'q3' %}
+    {% else %}
+      {% set season = 'q4' %}
+    {% endif %}
   {% endif %}
   <source srcset="/img/bg/{{ season }}/bg-sm.avif 576w, /img/bg/{{ season }}/bg-md.avif 768w, /img/bg/{{ season }}/bg-lg.avif 1920w, /img/bg/{{ season }}/bg.avif" type="image/avif">
   <source srcset="/img/bg/{{ season }}/bg-sm.webp 576w, /img/bg/{{ season }}/bg-md.webp 768w, /img/bg/{{ season }}/bg-lg.webp 1920w, /img/bg/{{ season }}/bg.webp" type="image/webp">

@@ -47,7 +47,7 @@ services:
       image: carlgo11/guest-portal:frontend
       restart: unless-stopped
       volumes:
-         - "./resources/images/:/guest-portal/public/img/bg/:ro"
+         - "./images/:/guest-portal/public/img/bg/:ro"
       read_only: true
       tmpfs:
          - /tmp
@@ -75,16 +75,47 @@ volumes:
 
 ### Background images
 
-The frontend service requires background images to be present.
-In `/guest-portal/public/img/bg/` there should be a directory for each quarter/season of the year. `winter`,`spring`,`summer`,`fall`.
-These directories are used to host background images.
+The frontend service requires background images to be present in `/guest-portal/public/img/bg/`.
+The following images are to be present in the folder:
 
-The site fetches `bg.jpg` from `/guest-portal/public/img/bg/{season}/` in the Docker container and converts it into
-JPEG, AV1 and
-WebP images in different resolutions.
+| File         | Type | Recommended resolution |
+|--------------|------|------------------------|
+| `bg.jpg`     | JPEG | 4K                     |
+| `bg.avif`    | AV1  | 4K                     |
+| `bg.webp`    | WEBP | 4K                     |
+| `bg-lg.jpg`  | JPEG | 1920w                  |
+| `bg-lg.avif` | AV1  | 1920w                  |
+| `bg-lg.webp` | WEBP | 1920w                  |
+| `bg-md.jpg`  | JPEG | 768w                   |
+| `bg-md.avif` | AV1  | 768w                   |
+| `bg-md.webp` | WEBP | 768w                   |
+| `bg-sm.jpg`  | JPEG | 576w                   |
+| `bg-sm.avif` | AV1  | 576w                   |
+| `bg-sm.webp` | WEBP | 576w                   |
 
-Link to an appropriate image (preferably larger than 1920x1080) as `bg.jpg` before starting the `frontend` container. In
-the example `docker-compose.yml` above, `bg.jpg` is placed in the same directory as the Docker compose file.
+#### Seasonal/Quarterly backgrounds
+
+If you want to present different background images based on the current season, set the environment variable `BG_SEASONAL` to 1 on the backend server.
+You should then create four new directories in the `/guest-portal/public/img/bg/` directory:
+
+| Directory                         | Active dates               |
+|-----------------------------------|----------------------------|
+| `/guest-portal/public/img/bg/q1/` | March 20 - June 19         |
+| `/guest-portal/public/img/bg/q2/` | June 20 - September 21     |
+| `/guest-portal/public/img/bg/q3/` | September 22 - December 20 |
+| `/guest-portal/public/img/bg/q4/` | December 21 - March 19     |
+
+Inside each directory, you should place images corresponding to background image table above. 
+
+```YAML
+volumes:
+   - "./images/q1/:/guest-portal/public/img/bg/q1/:ro"
+   - "./images/q2/:/guest-portal/public/img/bg/q2/:ro"
+   - "./images/q3/:/guest-portal/public/img/bg/q3/:ro"
+   - "./images/q4/:/guest-portal/public/img/bg/q4/:ro"
+environment:
+   BG_SEASONAL: "1"
+```
 
 ### Environment variables
 

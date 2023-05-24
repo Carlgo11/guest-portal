@@ -24,7 +24,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $loader = new FilesystemLoader([__DIR__ . '/../templates', __DIR__ . '/../templates/index']);
         $twig = new Environment($loader);
-        echo $twig->render('index.twig', ['lang' => language()]);
+        echo $twig->render('index.twig', ['lang' => language(), 'background' => $_ENV['BG_SEASONAL']]);
         break;
 
     case 'POST':
