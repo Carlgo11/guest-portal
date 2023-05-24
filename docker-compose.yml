@@ -31,8 +31,6 @@ services:
       - "8080:8080"
     networks:
       - php
-    environment:
-      UNIFI_SITE: "default"
 
   database:
     image: linuxserver/mariadb:latest

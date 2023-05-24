@@ -7,8 +7,7 @@ COPY ./resources/php-www.conf /usr/local/etc/php-fpm.d/www.conf
 RUN composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader -d /guest-portal
 USER 82
 ENV LANG en
-ENV UNIFI_SITE default
-ENV UNIFI_VERSION 6.0.0
+ENV UNIFI_VERSION 7.0.0
 ENV MYSQL_PORT 3306
 ENV MYSQL_HOST mysql
 ENV DATABASE mysql

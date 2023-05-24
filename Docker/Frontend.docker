@@ -1,5 +1,4 @@
 FROM nginx:alpine
-RUN apk add --no-cache imagemagick
 COPY --chown=nobody:nobody ./public /guest-portal/public
 COPY --chown=nginx:nginx ./resources/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8080

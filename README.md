@@ -30,56 +30,56 @@ Here's a template docker-compose.yml file:
 version: "3.7"
 services:
 
-  backend:
-    image: carlgo11/guest-portal:backend
-    restart: unless-stopped
-    read_only: true
-    tmpfs:
-      - /tmp
-    env_file:
-      - mysql.env
-      - unifi.env
+   backend:
+      image: carlgo11/guest-portal:backend
+      restart: unless-stopped
+      read_only: true
+      tmpfs:
+         - /tmp
+      env_file:
+         - mysql.env
+         - unifi.env
+      networks:
+         - php
+         - mysql
 
-  frontend:
-    image: carlgo11/guest-portal:frontend
-    restart: unless-stopped
-    user: nginx
-    volumes:
-      - "./bg.jpg:/guest-portal/public/img/bg/q1/bg.jpg:ro"
-      - "./bg.jpg:/guest-portal/public/img/bg/q2/bg.jpg:ro"
-      - "./bg.jpg:/guest-portal/public/img/bg/q3/bg.jpg:ro"
-      - "./bg.jpg:/guest-portal/public/img/bg/q4/bg.jpg:ro"
-    read_only: true
-    tmpfs:
-      - /tmp
-      - /guest-portal/public/img/bg/
-    ports:
-      - "8080:8080"
-    env_file:
-      - unifi.env
+   frontend:
+      image: carlgo11/guest-portal:frontend
+      restart: unless-stopped
+      volumes:
+         - "./resources/images/:/guest-portal/public/img/bg/:ro"
+      read_only: true
+      tmpfs:
+         - /tmp
+      ports:
+         - "8080:8080"
+      networks:
+         - php
 
-  mysql:
-    image: linuxserver/mariadb
-    restart: unless-stopped
-    volumes:
-      - "mysql:/var/lib/mysql"
-      - "./db-template.sql:/config/initdb.d/db.sql:ro"
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-    env_file:
-      - mysql.env
+   database:
+      image: linuxserver/mariadb:latest
+      volumes:
+         - "mysql:/var/lib/mysql"
+         - "./resources/db-template.sql:/config/initdb.d/db.sql"
+      env_file:
+         - mysql.env
+      networks:
+         - mysql
 
+networks:
+   mysql:
+   php:
 volumes:
-  mysql:
+   mysql:
 ```
 
 ### Background images
 
 The frontend service requires background images to be present.
-In `/guest-portal/public/img/bg/` there should be a directory for each quarter of the year. `q1`,`q2`,`q3`,`q4`.
+In `/guest-portal/public/img/bg/` there should be a directory for each quarter/season of the year. `winter`,`spring`,`summer`,`fall`.
 These directories are used to host background images.
 
-The site fetches `bg.jpg` from `/guest-portal/public/img/bg/q{1,2,3,4}` in the Docker container and converts it into
+The site fetches `bg.jpg` from `/guest-portal/public/img/bg/{season}/` in the Docker container and converts it into
 JPEG, AV1 and
 WebP images in different resolutions.
 
@@ -98,7 +98,7 @@ the example `docker-compose.yml` above, `bg.jpg` is placed in the same directory
 | UNIFI_USER     |         | UniFi Hotspot username         |     guest-portal      | Backend           |
 | UNIFI_PASSWORD |         | UniFi Hotspot password         |       password        | Backend           |
 | UNIFI_URL      |         | UniFi Controller IP/URL & port | <https://192.168.1.2> | Backend           |
-| UNIFI_VERSION  |  6.0.0  | Controller version             |        6.0.44         | Backend           |
+| UNIFI_VERSION  |  7.0.0  | UniFi Controller version       |        7.3.89         | Backend           |
 | LANG           |   en    | Language pack to use           |          en           | Backend           |
 | DATABASE       |  mysql  | Storage method. (MySQL/Redis)  |         mysql         | Backend           |
 
